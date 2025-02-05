@@ -158,13 +158,19 @@
         <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 
         <script>
-          
+          function waitForActiveButton(callback) {
+  let interval = setInterval(() => {
+    let $activeButton = $('.brands .filter-group .button-wrapper a.active');
+    if ($activeButton.length) {
+      clearInterval(interval);
+      callback($activeButton);
+    }
+  }, 100);
+}
+
+waitForActiveButton(($btn) => $btn.click());
             $(function () {
 
-	    setTimeout(function () {
-  $('.brands .filter-group .button-wrapper a.active').click();
-}, 500);
-		    
           
 	$(document).on('click', '.text-copy', function () {
     var copiedtext = $(this).text();
