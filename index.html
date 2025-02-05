@@ -180,7 +180,6 @@
     }
 });
 
-// Hover event delegation
 $(document).on('mouseenter', '.copy-clip', function() {
     $(this).find(".copied-toast").show();
     $(this).parents('.each-brand').find('.brand-image-hover').addClass('svg_active');
@@ -188,26 +187,12 @@ $(document).on('mouseenter', '.copy-clip', function() {
     $(this).find(".copied-toast").hide();
     $(this).parents('.each-brand').find('.brand-image-hover').removeClass('svg_active');
 });
-
-	
-
-	
-
-	
 });
-
-
         </script>
 <script>
-  const ACCESS_TOKEN = 'sl.u.AFhFcrJcx6-PPF4UffbhomoKRLFS4hc6Q8VobGNpBfBzPSIuIuYEXt4d8E-fmkIpi5mGhUf90uAnt4r9k31fZt6fN6Yg3t1_8EpE_aXOGQ8EvXw4W2B5YfVEddrJf_Djjp3R75rNU6yIlsx0OzLFg-GkpKwcM4q0flnA4PrRq63eOULjqBzuq5Zj7n_b1L7FRUBkRvoqDcIoFx4LG2hVbBS3aORnSk_C6Vxa5rQ27vliHnijzenP7UPgvuvBs_IVry98eWwseUhbe4R8CftXQsDtJW1-RD5UYChKrnYcoNugSF003DiuZEIvnjAFrSGpUgN3QDp-v-k9d68CrdcBRYLvFzKq05i_yEF390DxqlJHnMCeGcyP50KE7Wr2aQJODvF3OvwtIy3loo-C5xEh903ORBTLz5e-2HB6063i_QJF4YfUg1M6TlSlEW5LP1MZqBAyxlik09g-GH82cI0GoTCATefGr6jibFWwXuIKCDfbhTRQ8wVfQDF9ypod9SRoDQVl1mChOvjVQYfQcqrKV5Ms_RaLbKsHVomXBC_XB2BYR8AyVx1JPuTTB9kdNiszQc8pqrckej_pJs-unJ_JmeaoXhtmE41cazkiHnH-dHbtNo9LWg1Qm0Al_bVkquVqpHJFZrOoBfgHZ8kjfmmAhv44KsnFE2mMR8ns5J7voJM6Atklf1j2-gepGr-vWKB1q6UmeIrKODqdvK0aHfrojzf_GLCUjXhlYF7uSMGFsDxjszGXZ9d3_sIFOy2h7f-i-JUl5mx-EbEn7As5FSF13T4OR2xSLitTv4ME4nMWitCCj6s7Jskrlnhd1pIu41EW_S3CFW8YEtHRz31YWivJEbb_J8mFVg-OoVFWlQTnl3HEAJ0dEi2SylCDuXmvRlg1wH317eGXFfBZDcfg0qom4eJh7r0zm-_WVcJySYMLsLPwpVLsABmUN_y-CMcY6_Lyw35JcruiDgyhdH1OT8ZzX8C5ZDE_ZE7e-SclkatSBpOfvwZX-zkC9yO4GqDEl8GxJ5Dr3qli4Co3AdxgWN0HYXbALhDhx9NUOkiDlRlW7DwIWfuGZB6zumh3ZElIAUwHRibJcfepDmE7v5fSHaaLfPRQ5kgP47n0XNWcm8THdbfYruCd-oeK6ahulRXVaLIz5grirtN7b-9D7YGtsrzKWrD7B-J4N_0FQPLDUY_ydsRYXfuWnZx30i1-p-ht6ykFZwHm_23QPLSVZ6mzHGHm-FlcYD45boDydfYD6ZuUErv-lxpOrQ7J2ZS4FQivT754TdRbKmQLu8esIOakTu2FaC_EcPku50-zXBx-euMmOx3UDROyESQyDfqZJFNil0vP6hxWij_SxRa1X0A0wKfnSehfB1Qz-TdVKg1Bb-xrF4H0ww'; // Replace with your actual token
-
-  // Cache object to store fetched images
+  const ACCESS_TOKEN = 'sl.u.AFhFcrJcx6-PPF4UffbhomoKRLFS4hc6Q8VobGNpBfBzPSIuIuYEXt4d8E-fmkIpi5mGhUf90uAnt4r9k31fZt6fN6Yg3t1_8EpE_aXOGQ8EvXw4W2B5YfVEddrJf_Djjp3R75rNU6yIlsx0OzLFg-GkpKwcM4q0flnA4PrRq63eOULjqBzuq5Zj7n_b1L7FRUBkRvoqDcIoFx4LG2hVbBS3aORnSk_C6Vxa5rQ27vliHnijzenP7UPgvuvBs_IVry98eWwseUhbe4R8CftXQsDtJW1-RD5UYChKrnYcoNugSF003DiuZEIvnjAFrSGpUgN3QDp-v-k9d68CrdcBRYLvFzKq05i_yEF390DxqlJHnMCeGcyP50KE7Wr2aQJODvF3OvwtIy3loo-C5xEh903ORBTLz5e-2HB6063i_QJF4YfUg1M6TlSlEW5LP1MZqBAyxlik09g-GH82cI0GoTCATefGr6jibFWwXuIKCDfbhTRQ8wVfQDF9ypod9SRoDQVl1mChOvjVQYfQcqrKV5Ms_RaLbKsHVomXBC_XB2BYR8AyVx1JPuTTB9kdNiszQc8pqrckej_pJs-unJ_JmeaoXhtmE41cazkiHnH-dHbtNo9LWg1Qm0Al_bVkquVqpHJFZrOoBfgHZ8kjfmmAhv44KsnFE2mMR8ns5J7voJM6Atklf1j2-gepGr-vWKB1q6UmeIrKODqdvK0aHfrojzf_GLCUjXhlYF7uSMGFsDxjszGXZ9d3_sIFOy2h7f-i-JUl5mx-EbEn7As5FSF13T4OR2xSLitTv4ME4nMWitCCj6s7Jskrlnhd1pIu41EW_S3CFW8YEtHRz31YWivJEbb_J8mFVg-OoVFWlQTnl3HEAJ0dEi2SylCDuXmvRlg1wH317eGXFfBZDcfg0qom4eJh7r0zm-_WVcJySYMLsLPwpVLsABmUN_y-CMcY6_Lyw35JcruiDgyhdH1OT8ZzX8C5ZDE_ZE7e-SclkatSBpOfvwZX-zkC9yO4GqDEl8GxJ5Dr3qli4Co3AdxgWN0HYXbALhDhx9NUOkiDlRlW7DwIWfuGZB6zumh3ZElIAUwHRibJcfepDmE7v5fSHaaLfPRQ5kgP47n0XNWcm8THdbfYruCd-oeK6ahulRXVaLIz5grirtN7b-9D7YGtsrzKWrD7B-J4N_0FQPLDUY_ydsRYXfuWnZx30i1-p-ht6ykFZwHm_23QPLSVZ6mzHGHm-FlcYD45boDydfYD6ZuUErv-lxpOrQ7J2ZS4FQivT754TdRbKmQLu8esIOakTu2FaC_EcPku50-zXBx-euMmOx3UDROyESQyDfqZJFNil0vP6hxWij_SxRa1X0A0wKfnSehfB1Qz-TdVKg1Bb-xrF4H0ww';
   const imageCache = {};
-
-  // Function to delay execution (for rate limiting)
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-  // Function to fetch files with pagination
   const fetchFilesWithPagination = async (folderPath) => {
     let hasMore = true;
     let cursor = null;
@@ -221,26 +206,23 @@ $(document).on('mouseenter', '.copy-clip', function() {
             'Authorization': `Bearer ${ACCESS_TOKEN}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }), // Fetch up to 200 files per request
+          body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }),
         });
 
         if (!response.ok) {
           if (response.status === 429) {
-            // Rate limit exceeded, wait and retry
             const retryAfter = parseInt(response.headers.get('Retry-After')) || 1000;
             console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
-            await delay(retryAfter); // Wait before retrying
+            await delay(retryAfter); 
             continue;
           }
           throw new Error(`Error: ${response.statusText}`);
         }
 
         const data = await response.json();
-        allFiles = allFiles.concat(data.entries); // Accumulate files
+        allFiles = allFiles.concat(data.entries);
         hasMore = data.has_more;
-        cursor = data.cursor; // Use the cursor for the next request
-
-        // Add a small delay between requests to avoid hitting rate limits
+        cursor = data.cursor; 
         await delay(100);
       }
 
@@ -251,11 +233,10 @@ $(document).on('mouseenter', '.copy-clip', function() {
     }
   };
 
-  // Function to fetch temporary links in batches to avoid rate limits
   const fetchTemporaryLinks = async (files, batchSize = 100) => {
     let allFilesWithUrls = [];
     for (let i = 0; i < files.length; i += batchSize) {
-      const batch = files.slice(i, i + batchSize); // Split files into smaller batches
+      const batch = files.slice(i, i + batchSize); 
       const filePromises = batch.map(async file => {
         try {
           const tempLinkResponse = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
@@ -269,11 +250,10 @@ $(document).on('mouseenter', '.copy-clip', function() {
 
           if (!tempLinkResponse.ok) {
             if (tempLinkResponse.status === 429) {
-              // Rate limit exceeded, wait and retry
               const retryAfter = parseInt(tempLinkResponse.headers.get('Retry-After')) || 1000;
               console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
-              await delay(retryAfter); // Wait before retrying
-              return null; // Skip for now, try fetching again later
+              await delay(retryAfter);
+              return null;
             }
             throw new Error(`Error: ${tempLinkResponse.statusText}`);
           }
@@ -287,21 +267,16 @@ $(document).on('mouseenter', '.copy-clip', function() {
       });
 
       const batchWithUrls = await Promise.all(filePromises);
-      allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean)); // Remove null entries
+      allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean)); 
 
-      // Add a small delay between batches to avoid hitting rate limits
-      await delay(500); // Adjust delay as necessary based on API limits
+      await delay(500);
     }
 
     return allFilesWithUrls;
   };
 
-  // Function to render files in the target div
   const renderFiles = (filesWithUrls, targetDiv) => {
-    // Clear the existing content of the target div
     targetDiv.innerHTML = '';
-
-    // Render all files at once
     filesWithUrls.forEach(file => {
       const divContent = document.createElement('div');
       divContent.classList.add('each-brand');
@@ -320,48 +295,38 @@ $(document).on('mouseenter', '.copy-clip', function() {
           </div>
         </div>`;
 
-      // Append the new content to the target div
       targetDiv.appendChild(divContent);
     });
 
     console.log('Images rendered in:', targetDiv);
   };
 
-  // Function to load images for a specific folder
   const loadImagesForFolder = async (folderLocation, targetDiv) => {
     try {
       console.log(`Fetching files in folder: ${folderLocation}`);
       const folderPath = `/_Raw Logo/${folderLocation}`;
 
-      // Check if the images are already in the cache
       if (imageCache[folderLocation]) {
         console.log('Images found in cache. Rendering from cache.');
         renderFiles(imageCache[folderLocation], targetDiv);
         return;
       }
 
-      // Fetch all files with pagination
       const allFiles = await fetchFilesWithPagination(folderPath);
 
-      // Filter only image files
       const files = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
       console.log('Filtered image files:', files);
-
-      // Fetch temporary links for all files in batches
       const filesWithUrls = await fetchTemporaryLinks(files);
       console.log('Files with temporary links:', filesWithUrls);
 
-      // Store the fetched images in the cache
       imageCache[folderLocation] = filesWithUrls;
 
-      // Render the files in the target div
       renderFiles(filesWithUrls, targetDiv);
     } catch (error) {
       console.error('Error fetching files in folder:', error);
     }
   };
 
-  // Event listener for filter buttons
   document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
     button.addEventListener('click', async () => {
       const target = button.getAttribute('data-target');
@@ -373,15 +338,12 @@ $(document).on('mouseenter', '.copy-clip', function() {
         return;
       }
 
-      // Remove active class from all buttons and add to the clicked one
       document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
 
-      // Remove active class from all containers and add to the target one
       document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
       targetDiv.classList.add('active');
 
-      // Load images for the selected folder
       await loadImagesForFolder(folderLocation, targetDiv);
       targetDiv.classList.remove('animated-wait');
 
@@ -414,7 +376,7 @@ $(document).on('mouseenter', '.copy-clip', function() {
       $('.brand-box-container .list .each-brand').wrap('<li>');
       $(".copied-toast").hide();
 
-      initIsotope(); // Initialize Isotope after rendering
+      initIsotope();
 
       
           $('.brand-box-container input[type="checkbox"]').prop('checked', false);
@@ -430,7 +392,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
   var qsRegex;
   var $grid;
 
-  // Function to initialize Isotope
   function initIsotope() {
     $grid = $('.brand-letter-group .list').isotope({
       itemSelector: 'li',
@@ -443,7 +404,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
     $('body').addClass('activated');
   }
 
-  // Function to update filter
   function updateFilter() {
     qsRegex = new RegExp($('.search').val(), 'gi');
     $grid.isotope();
@@ -459,7 +419,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
     }, 500);
   }
 
-  // Debounce function
   function debounce(fn, threshold) {
     var timeout;
     threshold = threshold || 100;
@@ -474,14 +433,11 @@ $(document).on('mouseenter', '.copy-clip', function() {
     };
   }
 
-  // Wait for the DOM to be ready
   $(document).ready(function () {
     setTimeout(initIsotope, 1000);
 
-    // Search input event
     $('.search').on('keyup', debounce(updateFilter, 100));
 
-    // MutationObserver to detect dynamically added elements
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.addedNodes.length) {
@@ -511,7 +467,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
 
      $('.download.button-download').addClass('disabled');
             $(document).on('click', '.brand-box-container input[type="checkbox"]', function () {
-            //$('').on('click', function() {
                 if ($(this).is(':checked')) {
                     $(this).removeClass().addClass('thumbChecked');
                     links.push($(this).attr('data-url'));
@@ -527,7 +482,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
 
                     var itemtoRemove = $(this).attr('data-url');
                     links.splice($.inArray(itemtoRemove, links), 1);
-                    //console.log(links);
 
                     if (links.length == 0) {
                         $('.download').addClass('download-disable');
@@ -537,7 +491,7 @@ $(document).on('mouseenter', '.copy-clip', function() {
                 var countData = links.length;
                 $('.brand-container .ry-flex .brand-text .count').text(countData);
 
-                if (countData >= 1) { // Fixed incorrect `if (countData => 1 )`
+                if (countData >= 1) { 
                     $('.clear-all-check').show();
                     $('.download.button-download').removeClass('disabled');
                 } else {
@@ -579,39 +533,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
 
     });
   });
-  /*
-  $(document).on('click', '.brands .filter-group .button-wrapper .ry-btn-primary', function () {
-    
-    var $this = $(this);
-    var target = $this.attr('data-target');
-
-    console.log("Button clicked:", $this);
-    console.log("Has active class before click?", $this.hasClass('active'));
-
-    if ($this.hasClass('active')) {
-        console.log('current');
-    } else {
-        console.log('other');
-
-        $('.brands .filter-group .button-wrapper .ry-btn-primary').removeClass('active');
-        $('.brand-box-container').removeClass('active loaded');
-
-        $(target).addClass('active');
-        $this.addClass('active');
-
-        $('.brand-box-container input[type="checkbox"]').prop('checked', false);
-
-        $('.clear-all-check').hide();
-        $('.brand-container .ry-flex .brand-text .count').text('0');
-
-        $('.download.button-download').addClass('disabled');
-
-        links = [];
-    }
-
-    console.log("Has active class after click?", $this.hasClass('active'));
-});
-*/
 
   function generateZIP() {
     console.log('TEST');
@@ -620,12 +541,10 @@ $(document).on('mouseenter', '.copy-clip', function() {
     var zipFilename = "Pictures.zip";
 
     links.forEach(function (url, i) {
-        // Extract file extension from the URL
         var extensionMatch = url.match(/\.([a-zA-Z0-9]+)(\?|$)/);
-        var extension = extensionMatch ? extensionMatch[1] : 'jpg'; // Default to jpg if no extension found
+        var extension = extensionMatch ? extensionMatch[1] : 'jpg'; 
         var filename = i + '.' + extension;
 
-        // Fetch binary content and add it to the ZIP
         JSZipUtils.getBinaryContent(url, function (err, data) {
             if (err) {
                 console.error("Error downloading:", url, err);
@@ -634,7 +553,6 @@ $(document).on('mouseenter', '.copy-clip', function() {
             zip.file(filename, data, { binary: true });
             count++;
             
-            // Once all files are added, generate and download the ZIP
             if (count === links.length) {
                 zip.generateAsync({ type: 'blob' }).then(function (content) {
                     saveAs(content, zipFilename);
@@ -647,4 +565,3 @@ $(document).on('mouseenter', '.copy-clip', function() {
 </script>
 	</body>
 </html>
-
