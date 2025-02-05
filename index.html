@@ -27,11 +27,11 @@
       <div id="brands" class="col-xs-12 brands">
         <div class="filter-group">
           <div class="button-wrapper">
-            <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active">Brand Logo</a>
-            <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary">Brand with Frame</a>
-            <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary">Brand with Model</a>
-            <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary">Frame Logo</a>
-            <a href="javascript:void(0)" data-target="#Payment-Options" class="ry-btn ry-btn-primary">Payment Logo</a>
+            <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active" data-folderlocation="_Contact Lens Brand">Brand Logo</a>
+            <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images Isolated">Brand with Frame</a>
+            <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images with Model">Brand with Model</a>
+            <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary" data-folderlocation="_Frame Brands">Frame Logo</a>
+            <a href="javascript:void(0)" data-target="#Payment-Options" class="ry-btn ry-btn-primary" data-folderlocation="_Payment Options">Payment Logo</a>
           </div>
           <div class="search-wrapper">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -61,7 +61,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-lg-9 ry-each brand-list">
-              <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container active loaded" data-folder="_Contact Lens Brand">
+              <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Contact Lens Brand">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -76,7 +76,7 @@
                 </div>
                 
               </div>
-              <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container" data-folder="_Brand Images Isolated">
+              <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images Isolated">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -91,7 +91,7 @@
                 </div>
                 
               </div>
-              <div id="Brand-Images-with-Model" class="col-xs-12 brand-box-container" data-folder="_Brand Images with Model">
+              <div id="Brand-Images-with-Model" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images with Model">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -106,7 +106,7 @@
                 </div>
                 
               </div>
-              <div id="Frame-Brands" class="col-xs-12 brand-box-container" data-folder="_Frame Brands">
+              <div id="Frame-Brands" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Frame Brands">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -121,7 +121,7 @@
                 </div>
                 
               </div>
-              <div id="Payment-Options" class="col-xs-12 brand-box-container" data-folder="_Payment Options">
+              <div id="Payment-Options" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Payment Options">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -158,8 +158,9 @@
         <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 
         <script>
+          
             $(function () {
-            
+              /*
 function removeNumberPrefixAndCapitalize(text) {
     
     let cleanedText = text.replace(/^\d+[-_]?/, '');
@@ -180,42 +181,43 @@ setTimeout(function() {
         }
         $(this).parent().find('[data-letter="'+ letter +'"]').append(this);
     });
+    
 }, 5000);
 
 
-	setTimeout(function() {
-		$('.brand-box-container .list .each-brand').wrap('<li>');
-	}, 5100);
+    setTimeout(function() {
+        $('.brand-box-container .list .each-brand').wrap('<li>');
+        $(".copied-toast").hide();
+    }, 5100);
+	*/
+	$(document).on('click', '.text-copy', function () {
+    var copiedtext = $(this).text();
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(copiedtext)
+        .then(() => {
+            $(this).prev(".copied-toast").text("Copied!").show().fadeOut(1200);
+            setTimeout(() => {
+                $(this).prev(".copied-toast").text("Copy Image Url");
+            }, 1500);
+        })
+        .catch(() => {
+            $(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
+        });
+    } else {
+        $(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
+    }
+});
+
+// Hover event delegation
+$(document).on('mouseenter', '.copy-clip', function() {
+    $(this).find(".copied-toast").show();
+    $(this).parents('.each-brand').find('.brand-image-hover').addClass('svg_active');
+}).on('mouseleave', '.copy-clip', function() {
+    $(this).find(".copied-toast").hide();
+    $(this).parents('.each-brand').find('.brand-image-hover').removeClass('svg_active');
+});
+
 	
-	$(".copied-toast").hide();
-	$(".text-copy").click(function () {
-		var copiedtext = $(this).text();
-		if (navigator.clipboard) {
-			navigator.clipboard.writeText(copiedtext)
-			.then(() => {
-				$(this).prev(".copied-toast").text("Copied!").show().fadeOut(1200);
-				setTimeout(function() {
-					$(".copied-toast").text("Copy Image Url");
-				}, 1500);
-
-				
-			})
-			.catch((error) => {
-				$(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
-			});
-		} else {
-			$(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
-		}
-
-	});
-
-	$(".copy-clip").hover(function(e){
-		$(this).find(".copied-toast").show();
-		$(this).parents('.each-brand').find('.brand-image-hover').addClass('svg_active');
-	},function(e){
-		$(this).find(".copied-toast").hide();
-		$(this).parents('.each-brand').find('.brand-image-hover').removeClass('svg_active');
-	});
 
 	
 
@@ -224,362 +226,453 @@ setTimeout(function() {
 
 
         </script>
+<script>
+  const ACCESS_TOKEN = 'sl.u.AFiumdYrQvkF5REw45NGM71bcChrDF5HrCzxCCkLezfo0_jdXcSiZhd9zLzbo5gzvAiYIUtzUg1vpQ57kxzQIrHhhYpkcgeZQoCp6A7FCUDJEFlW-ElomePbkjdUwJNdPngPs8oleyoo1hTVAoD4B5wp4eHT4KvXVOqA_VH6ETUKaWcjx988Qf8fq4gDfFKdRnhDxkaEZejyRiTg-N-iwRDGBjKj2lVNg7pNhCtdJAmASSvvCISuXfBDLBsyZb0n-ylM02tGu57dCXVbzKUh53fJH_O0iT3sBU3zOsorwUxiiXsRZS2Kdn5v2H2tYCXBb0MtQuH40hruoxDrx0m3WE5r6lbf9665aPAVu4Cdwzo6nV1OFfKKjRyDJNdatxv1acF_qj_grfgEpU5GucI8WB8hE9MfwAhAcHHpVUJ3kDLfwigd2bVdZABMEN3YsNEoCqyk4HCEwQU820IzQPz3NTO-VishA5HMGs2y9pzzge_K-e7Iqsn9MREyiG1OntnoY-Tknd_xi99Mfqe8qbS1uwgSKulOOwAsCfW201DblbEu6wdqvC88EVeomzf_NgbudCzYQrFAbEFCOPWSnOcWAwcnPwPprrW6Xm60DeOCfX0KMvV6amB79KkMO_tsmlcDk4m__UGQh_5k5LV5JzcrCmTS9PYLqsHxGiNY0zoGRM8D5mGmtSQl2ropBH3u1AtLr8_eLTpXfIfA7P0EqrxN1aK7ue--1M01LcIBIQF30K3sLHQjDyCXD_pi1_j3Ov0PfmJFQG4Pjb2opqUYpc73rtEdXj-iqOUBMbFZ_L_PLERQAeTLqYB_zZRv-Yy3C46PEJKw5YBbgoC-uR6d6688QGP_te5AMt6Yoycsccx3Q6LbzWmSpkm-sn_mjYGT0TLt-iQG7wuZmNPHt-hMkdvcBMbm_6JJH93ZGWRF_ySDxYkev8L8KvMqVzBLCQS6wjM2lUOT4A7cj4txNFhWCIHCh04dvGT0cREDcdUOfbFR3e4Z6Yp9CN9G1cKnSzPG6vcupzavhK0WpHDfodZ0oOj4axc7AOlnqanDrrCU547VUQUDx02lqSS0fEIK6V7r4_V4cyCT3v6jCQHNjvFKRwJi3G-P30Fg2k1FHVOlEzDT6EB4Qwu9PPrJlt7Ax8WaQlHwESq2JbdusjmNRmeHcvdd79TCD1YtxjHIei6PQMzsz_nThtL_pvT83qjWhzLLRN1zbXejmjgJ5S_H9phJRhxWdr_r0ptj5PTRD9yWIHAo2WdDEbrswhVB3kgzp6AmB_w4XZr9RAmpmJqR-nZ80hCbglavc63NNdrvR9mFp1SJIsGQCMMWCXnLy9Fz6oWNZnmxtakORXrJjuetvWCKzg8zWrL8rvuRtFCpRMiJmkWMAb9gIQ'; // Replace with your actual token
 
-		<script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/lazyimages.js"></script>
-		
+  // Cache object to store fetched images
+  const imageCache = {};
 
-		<script>
+  // Function to delay execution (for rate limiting)
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-			var links = [];
-			$(window).load( function(){
+  // Function to fetch files with pagination
+  const fetchFilesWithPagination = async (folderPath) => {
+    let hasMore = true;
+    let cursor = null;
+    let allFiles = [];
 
-				/*
-					HOVER FUNCTION
-				*/
-				$('.brand-box-container .each-brand').hover( function () {
-					var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
-					console.log(img__hover);
-					$(this).find('.brand-image-hover img').attr('src', img__hover);
-				});
+    try {
+      while (hasMore) {
+        const response = await fetch('https://api.dropboxapi.com/2/files/list_folder' + (cursor ? '/continue' : ''), {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${ACCESS_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }), // Fetch up to 200 files per request
+        });
 
+        if (!response.ok) {
+          if (response.status === 429) {
+            // Rate limit exceeded, wait and retry
+            const retryAfter = parseInt(response.headers.get('Retry-After')) || 1000;
+            console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
+            await delay(retryAfter); // Wait before retrying
+            continue;
+          }
+          throw new Error(`Error: ${response.statusText}`);
+        }
 
-				$('.download.button-download').addClass('disabled');
+        const data = await response.json();
+        allFiles = allFiles.concat(data.entries); // Accumulate files
+        hasMore = data.has_more;
+        cursor = data.cursor; // Use the cursor for the next request
 
-				$('.brand-box-container input[type="checkbox"]').on('click', function () {
+        // Add a small delay between requests to avoid hitting rate limits
+        await delay(100);
+      }
 
-					if ($(this).is(':checked')) {
-						$(this).removeClass().addClass('thumbChecked');
+      return allFiles;
+    } catch (error) {
+      console.error('Error fetching files with pagination:', error);
+      throw error;
+    }
+  };
 
-						links.push($(this).attr('data-url'));
+  // Function to fetch temporary links in batches to avoid rate limits
+  const fetchTemporaryLinks = async (files, batchSize = 100) => {
+    let allFilesWithUrls = [];
+    for (let i = 0; i < files.length; i += batchSize) {
+      const batch = files.slice(i, i + batchSize); // Split files into smaller batches
+      const filePromises = batch.map(async file => {
+        try {
+          const tempLinkResponse = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${ACCESS_TOKEN}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ path: file.path_display }),
+          });
 
+          if (!tempLinkResponse.ok) {
+            if (tempLinkResponse.status === 429) {
+              // Rate limit exceeded, wait and retry
+              const retryAfter = parseInt(tempLinkResponse.headers.get('Retry-After')) || 1000;
+              console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
+              await delay(retryAfter); // Wait before retrying
+              return null; // Skip for now, try fetching again later
+            }
+            throw new Error(`Error: ${tempLinkResponse.statusText}`);
+          }
 
-						if (links.length != 0) {
-							$('.download').removeClass('download-disable');
-						} else {
-							$('.download').addClass('download-disable');
-						}
+          const tempLinkData = await tempLinkResponse.json();
+          return { ...file, url: tempLinkData.link };
+        } catch (error) {
+          console.error('Error fetching temporary link:', error);
+          return null;
+        }
+      });
 
-					} else {
-						$(this).removeClass().addClass('thumb');
+      const batchWithUrls = await Promise.all(filePromises);
+      allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean)); // Remove null entries
 
-						var itemtoRemove = $(this).attr('data-url');
-						links.splice($.inArray(itemtoRemove, links), 1);
-						console.log(links);
+      // Add a small delay between batches to avoid hitting rate limits
+      await delay(500); // Adjust delay as necessary based on API limits
+    }
 
-						if (links.length == 0) {
+    return allFilesWithUrls;
+  };
 
-							$('.download').addClass('download-disable');
-						}
-					}
+  // Function to render files in the target div
+  const renderFiles = (filesWithUrls, targetDiv) => {
+    // Clear the existing content of the target div
+    targetDiv.innerHTML = '';
 
-					var countData = links.length;
-					$('.brand-container .ry-flex .brand-text .count').text(countData);
-					if (countData => 1 ) {
-						$('.clear-all-check').show();
-						$('.download.button-download').removeClass('disabled');
-					} else {
-						$('.clear-all-check').hide();
-						$('.download.button-download').addClass('disabled');
-					}
+    // Render all files at once
+    filesWithUrls.forEach(file => {
+      const divContent = document.createElement('div');
+      divContent.classList.add('each-brand');
+      divContent.innerHTML = `
+        <div class="brand-image-hover">
+          <img class="lazyload" src="${file.url}" data-img="${file.url}">
+        </div>
+        <div class="brand-form">
+          <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}">
+          <input type="hidden" class="data-storage" value="${file.url}" data-name="${file.name}" data-logo="${file.url}">
+          <p class="name">${file.name}</p>
+          <div class="copy-clip" data-link="${file.url}">
+            <div class="copied-toast">Copy Image Url</div>
+            <span class="text-copy">${file.url}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path></svg>
+          </div>
+        </div>`;
 
-				});
-				var clicked = false;
-				$('.clear-all-check').click(function () {
-					$('.brand-box-container input[type="checkbox"]').attr('checked', false);
+      // Append the new content to the target div
+      targetDiv.appendChild(divContent);
+    });
 
-					$('.clear-all-check').hide();
-					$('.brand-container .ry-flex .brand-text .count').text('0');
-					$('.download.button-download').addClass('disabled');
+    console.log('Images rendered in:', targetDiv);
+  };
 
-					links = [];
+  // Function to load images for a specific folder
+  const loadImagesForFolder = async (folderLocation, targetDiv) => {
+    try {
+      console.log(`Fetching files in folder: ${folderLocation}`);
+      const folderPath = `/_Raw Logo/${folderLocation}`;
 
-				});
+      // Check if the images are already in the cache
+      if (imageCache[folderLocation]) {
+        console.log('Images found in cache. Rendering from cache.');
+        renderFiles(imageCache[folderLocation], targetDiv);
+        return;
+      }
 
-				onAnimationFinished = function(){
-					$('body').addClass('activated');
-					console.log('test');
-				};
-				setTimeout(function() {
+      // Fetch all files with pagination
+      const allFiles = await fetchFilesWithPagination(folderPath);
 
-					var qsRegex;
+      // Filter only image files
+      const files = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
+      console.log('Filtered image files:', files);
 
-					// init Isotope
-					var $grid = $('.brand-letter-group .list').isotope({
-						itemSelector: 'li',
-						layoutMode: 'fitRows',
-						filter: function() {
-							return qsRegex ? $(this).text().match( qsRegex ) : true;
-						}
-					},$('body').addClass('activated'));
+      // Fetch temporary links for all files in batches
+      const filesWithUrls = await fetchTemporaryLinks(files);
+      console.log('Files with temporary links:', filesWithUrls);
 
+      // Store the fetched images in the cache
+      imageCache[folderLocation] = filesWithUrls;
 
+      // Render the files in the target div
+      renderFiles(filesWithUrls, targetDiv);
+    } catch (error) {
+      console.error('Error fetching files in folder:', error);
+    }
+  };
 
-					// use value of search field to filter
+  // Event listener for filter buttons
+  document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
+    button.addEventListener('click', async () => {
+      const target = button.getAttribute('data-target');
+      const folderLocation = button.getAttribute('data-folderlocation');
+      const targetDiv = document.querySelector(target);
 
+      if (!targetDiv) {
+        console.error(`Target div not found for: ${target}`);
+        return;
+      }
 
-					var $quicksearch = $('.search').keyup( debounce( function() {
-						qsRegex = new RegExp( $quicksearch.val(), 'gi' );
-						$grid.isotope();
-						/*
-						var $filtered = $grid.data('isotope').filteredItems;
-						var counter = $('.brand-letter-group');
-						var count = $filtered.length;
-						*/
-						setTimeout(function() {
-							$('.brand-letter-group').each(function(){
-								var finder = $(this).find('ul li:visible').length;
-								$(this).attr('data-count', finder);
-								setTimeout(function() {
-									$grid.isotope();
-								}, 100)
-							});
-						}, 500);
-					}, 100 ));
+      // Remove active class from all buttons and add to the clicked one
+      document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
 
+      // Remove active class from all containers and add to the target one
+      document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
+      targetDiv.classList.add('active');
 
-					function debounce( fn, threshold ) {
-						var timeout;
-						threshold = threshold || 100;
-						return function debounced() {
-							clearTimeout( timeout );
-							var args = arguments;
-							var _this = this;
-							function delayed() {
-								fn.apply( _this, args );
-							}
-							timeout = setTimeout( delayed, threshold );
-						};
-					}
-				}, 1000);
+      // Load images for the selected folder
+      await loadImagesForFolder(folderLocation, targetDiv);
+      targetDiv.classList.remove('animated-wait');
 
-				$('.brands .filter-group .button-wrapper .ry-btn-primary').click(function() {
-					var target = $(this).attr('data-target')
-					if ($(this).hasClass('active')) {
-						console.log('current');
-					} else {
-						console.log('other');
+      function removeNumberPrefixAndCapitalize(text) {
+        let cleanedText = text.replace(/^\d+[-_]?/, '');
+        return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);
+      }
 
-						$('.brands .filter-group .button-wrapper .ry-btn-primary').removeClass('active');
-						$('.brand-box-container').removeClass('active');
-						$('.brand-box-container').removeClass('loaded');
-						$(target).addClass('active');
-						$(this).addClass('active');
-						setTimeout(function() {
-							var $grid = $('.brand-letter-group .list').isotope({
-								itemSelector: 'li',
-								layoutMode: 'fitRows'
-							},$(target).addClass('loaded'));
+      $('.brand-box-container .each-brand').each(function () {
+        var cleanedText = removeNumberPrefixAndCapitalize($('p', this).text());
+        $('p', this).text(cleanedText);
 
+        var letter = cleanedText.charAt(0);
+        var data = $(this).html();
+        if (!$(this).parent().find('[data-letter="' + letter + '"]').length) {
+          $(this).parent().append('<div data-results="' + letter + '" data-count="" class="brand-letter-group"><span class="headline-letter">' + letter + '</span><ul class="list" data-letter="' + letter + '"></ul></div>');
 
-						}, 300);
+          let container = $(this).parent();
+          let groups = container.find('.brand-letter-group');
 
-						$('.brand-box-container input[type="checkbox"]').attr('checked', false);
+          groups.sort(function (a, b) {
+            return $(a).data('results').localeCompare($(b).data('results'));
+          });
 
-						$('.clear-all-check').hide();
-						$('.brand-container .ry-flex .brand-text .count').text('0');
-						$('.download.button-download').addClass('disabled');
+          groups.detach().appendTo(container);
+        }
+        $(this).parent().find('[data-letter="' + letter + '"]').append(this);
+      });
 
-						links = [];
-					}
-				});
+      $('.brand-box-container .list .each-brand').wrap('<li>');
+      $(".copied-toast").hide();
 
-				$( window ).scroll(function() {
-					var height = $(window).scrollTop();
+      initIsotope(); // Initialize Isotope after rendering
 
-					if(height  > 300) {
+      
+          $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+          $('.clear-all-check').hide();
+          $('.brand-container .ry-flex .brand-text .count').text('0');
+          $('.download.button-download').addClass('disabled');
 
-						$('.brands .filter-group').addClass('fixed');
-						$('.brand-container').addClass('fixed');
+          links = [];
+      
+      });
+  });
 
-					}else{
+  var qsRegex;
+  var $grid;
 
-						$('.brands .filter-group').removeClass('fixed');
-						$('.brand-container').removeClass('fixed');
-					}
+  // Function to initialize Isotope
+  function initIsotope() {
+    $grid = $('.brand-letter-group .list').isotope({
+      itemSelector: 'li',
+      layoutMode: 'fitRows',
+      filter: function () {
+        return qsRegex ? $(this).text().match(qsRegex) : true;
+      }
+    });
 
-				});
-			});
+    $('body').addClass('activated');
+  }
 
+  // Function to update filter
+  function updateFilter() {
+    qsRegex = new RegExp($('.search').val(), 'gi');
+    $grid.isotope();
 
+    setTimeout(function () {
+      $('.brand-letter-group').each(function () {
+        var finder = $(this).find('ul li:visible').length;
+        $(this).attr('data-count', finder);
+        setTimeout(function () {
+          $grid.isotope();
+        }, 100);
+      });
+    }, 500);
+  }
 
-			function generateZIP() {
-				console.log('TEST');
-				var zip = new JSZip();
-				var count = 0;
-				var zipFilename = "Pictures.zip";
+  // Debounce function
+  function debounce(fn, threshold) {
+    var timeout;
+    threshold = threshold || 100;
+    return function debounced() {
+      clearTimeout(timeout);
+      var args = arguments;
+      var _this = this;
+      function delayed() {
+        fn.apply(_this, args);
+      }
+      timeout = setTimeout(delayed, threshold);
+    };
+  }
 
-				links.forEach(function (url, i) {
-					var filename = links[i];
-					//filename = filename.replace(/[\/\*\|\:\<\>\?\"\\]/gi, '').replace("httpss3.amazonaws.comstatic.organiclead.comSite-b0ac8594-8528-44a1-b5eb-8d504e44dacbBrandLogo","");
-					filename = filename.replace(/[\/\*\|\:\<\>\?\"\\]/gi, '').replace("httpsdl.dropboxusercontent.coms","");
-					filename = filename.substr(filename.indexOf("_") + 1);
-					// loading a file and add it in a zip file
-					JSZipUtils.getBinaryContent(url, function (err, data) {
-						if (err) {
-							throw err; // or handle the error
-						}
-						zip.file(filename, data, { binary: true });
-						count++;
-						if (count == links.length) {
-							zip.generateAsync({ type: 'blob' }).then(function (content) {
-								saveAs(content, zipFilename);
-							});
-						}
-					});
-				});
-			}
+  // Wait for the DOM to be ready
+  $(document).ready(function () {
+    setTimeout(initIsotope, 1000);
 
+    // Search input event
+    $('.search').on('keyup', debounce(updateFilter, 100));
 
+    // MutationObserver to detect dynamically added elements
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.addedNodes.length) {
+          $grid.isotope('reloadItems').isotope();
+        }
+      });
+    });
 
-
-
-
-		</script>
+    var targetNode = document.querySelector('.brand-letter-group');
+    if (targetNode) {
+      observer.observe(targetNode, { childList: true, subtree: true });
+    }
+  });
+</script>
 
 
 <script>
-    const ACCESS_TOKEN = 'ACCESS';
-  
-    const listDropboxFolder = async () => {
-      try {
-        const response = await fetch('https://api.dropboxapi.com/2/files/list_folder', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ path: '' }) // Root folder
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-  
-        const data = await response.json();
-        const folder = data.entries.find(entry => entry['.tag'] === 'folder' && entry.name === '_Raw Logo');
-  
-        if (folder) {
-          // Now list subfolders inside the "_Raw Logo" folder
-          await listSubfolders(folder.path_display);
-        } else {
-          console.error('_Raw Logo folder not found');
-        }
-      } catch (error) {
-        console.error('Error fetching folders:', error);
-      }
-    };
-  
-    const listSubfolders = async (folderPath) => {
-      try {
-        const response = await fetch('https://api.dropboxapi.com/2/files/list_folder', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ path: folderPath })
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-  
-        const data = await response.json();
-        const subfolders = data.entries.filter(entry => entry['.tag'] === 'folder');
-  
-        if (subfolders.length > 0) {
-          console.log('Found subfolders:', subfolders.map(folder => folder.name));
-  
-          // Loop through each subfolder and fetch the files simultaneously (no delay)
-          subfolders.forEach(async (subfolder) => {
-            console.log(`Listing files for subfolder: ${subfolder.name}`);
-  
-            // Check if the subfolder name matches the data-folder attribute in HTML
-            const matchingDiv = document.querySelector(`[data-folder="${subfolder.name}"]`);
-            if (matchingDiv) {
-              console.log(`Found matching div for subfolder: ${subfolder.name}`);
-              await listFilesInSubfolder(subfolder.path_display, matchingDiv);
-            } else {
-              console.log(`No matching div found for subfolder: ${subfolder.name}`);
-            }
-          });
-        } else {
-          console.log('No subfolders found in this folder.');
-        }
-      } catch (error) {
-        console.error('Error fetching subfolders:', error);
-      }
-    };
-  
-    const listFilesInSubfolder = async (subfolderPath, div) => {
-      try {
-        const response = await fetch('https://api.dropboxapi.com/2/files/list_folder', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ path: subfolderPath })
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-  
-        const data = await response.json();
-        let files = data.entries.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
-  
-        if (files.length > 0) {
-          files.forEach(async (file) => {
-            const sharedLinkResponse = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ path: file.path_display })
+
+  var links = [];
+  $(function () {
+    $('body').addClass('activated')
+    $('.brand-box-container .each-brand').hover(function() {
+        var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
+        console.log(img__hover);
+        $(this).find('.brand-image-hover img').attr('src', img__hover);
+    });
+
+     $('.download.button-download').addClass('disabled');
+            $(document).on('click', '.brand-box-container input[type="checkbox"]', function () {
+            //$('').on('click', function() {
+                if ($(this).is(':checked')) {
+                    $(this).removeClass().addClass('thumbChecked');
+                    links.push($(this).attr('data-url'));
+                    console.log(links);
+                    if (links.length !== 0) {
+                        $('.download').removeClass('download-disable');
+                    } else {
+                        $('.download').addClass('download-disable');
+                    }
+
+                } else {
+                    $(this).removeClass().addClass('thumb');
+
+                    var itemtoRemove = $(this).attr('data-url');
+                    links.splice($.inArray(itemtoRemove, links), 1);
+                    //console.log(links);
+
+                    if (links.length == 0) {
+                        $('.download').addClass('download-disable');
+                    }
+                }
+
+                var countData = links.length;
+                $('.brand-container .ry-flex .brand-text .count').text(countData);
+
+                if (countData >= 1) { // Fixed incorrect `if (countData => 1 )`
+                    $('.clear-all-check').show();
+                    $('.download.button-download').removeClass('disabled');
+                } else {
+                    $('.clear-all-check').hide();
+                    $('.download.button-download').addClass('disabled');
+                }
             });
-  
-            const sharedLinkData = await sharedLinkResponse.json();
-            const fileUrl = sharedLinkData.link;
-  
-            const divContent = document.createElement('div');
-            divContent.classList.add('each-brand');
-            divContent.innerHTML = `
-              <div class="brand-image-hover">
-                <img class="lazyload" src="" data-img="${fileUrl}">
-              </div>
-              <div class="brand-form">
-                <input type="checkbox" name="brand" value="${file.name}" data-url="${fileUrl}">
-                <input type="hidden" class="data-storage" value="${fileUrl}" data-name="${file.name}" data-logo="${fileUrl}">
-                <p class="name">${file.name}</p>
-                <div class="copy-clip" data-link="${fileUrl}">
-                  <div class="copied-toast">Copy Image Url</div>
-                  <span class="text-copy">${fileUrl}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                  </svg>
-                </div>
-              </div>`;
-  
-            div.appendChild(divContent);
-          });
-        } else {
-          div.innerHTML += '<p>No images found in this subfolder.</p>';
-        }
-      } catch (error) {
-        console.error('Error fetching files in subfolder:', error);
-        div.innerHTML += '<p>Error fetching files in subfolder</p>';
-      }
+
+            $('.clear-all-check').click(function() {
+                $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+                $('.clear-all-check').hide();
+                $('.brand-container .ry-flex .brand-text .count').text('0');
+                $('.download.button-download').addClass('disabled');
+                links = [];
+            });
+
+
+    onAnimationFinished = function(){
+      $('body').addClass('activated');
+      console.log('test');
     };
-  
-    // Fetch folders on page load
-    window.onload = listDropboxFolder;
-  </script>
-  
+    
+    
 
 
+    $( window ).scroll(function() {
+      var height = $(window).scrollTop();
+
+      if(height  > 300) {
+
+        $('.brands .filter-group').addClass('fixed');
+        $('.brand-container').addClass('fixed');
+
+      }else{
+
+        $('.brands .filter-group').removeClass('fixed');
+        $('.brand-container').removeClass('fixed');
+      }
+
+    });
+  });
+  /*
+  $(document).on('click', '.brands .filter-group .button-wrapper .ry-btn-primary', function () {
+    
+    var $this = $(this);
+    var target = $this.attr('data-target');
+
+    console.log("Button clicked:", $this);
+    console.log("Has active class before click?", $this.hasClass('active'));
+
+    if ($this.hasClass('active')) {
+        console.log('current');
+    } else {
+        console.log('other');
+
+        $('.brands .filter-group .button-wrapper .ry-btn-primary').removeClass('active');
+        $('.brand-box-container').removeClass('active loaded');
+
+        $(target).addClass('active');
+        $this.addClass('active');
+
+        $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+
+        $('.clear-all-check').hide();
+        $('.brand-container .ry-flex .brand-text .count').text('0');
+
+        $('.download.button-download').addClass('disabled');
+
+        links = [];
+    }
+
+    console.log("Has active class after click?", $this.hasClass('active'));
+});
+*/
+
+  function generateZIP() {
+    console.log('TEST');
+    var zip = new JSZip();
+    var count = 0;
+    var zipFilename = "Pictures.zip";
+
+    links.forEach(function (url, i) {
+        // Extract file extension from the URL
+        var extensionMatch = url.match(/\.([a-zA-Z0-9]+)(\?|$)/);
+        var extension = extensionMatch ? extensionMatch[1] : 'jpg'; // Default to jpg if no extension found
+        var filename = i + '.' + extension;
+
+        // Fetch binary content and add it to the ZIP
+        JSZipUtils.getBinaryContent(url, function (err, data) {
+            if (err) {
+                console.error("Error downloading:", url, err);
+                return;
+            }
+            zip.file(filename, data, { binary: true });
+            count++;
+            
+            // Once all files are added, generate and download the ZIP
+            if (count === links.length) {
+                zip.generateAsync({ type: 'blob' }).then(function (content) {
+                    saveAs(content, zipFilename);
+                });
+            }
+        });
+    });
+}
+
+</script>
 	</body>
 </html>
 
