@@ -160,7 +160,10 @@
         <script>
           
             $(function () {
-           $('.brands .filter-group .button-wrapper a.active').trigger();
+		     setTimeout(() => {
+                 $('.brands .filter-group .button-wrapper a.active').click();
+            }, 1500);
+          
 	$(document).on('click', '.text-copy', function () {
     var copiedtext = $(this).text();
     if (navigator.clipboard) {
