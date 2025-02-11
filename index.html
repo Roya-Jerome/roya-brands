@@ -7,6 +7,7 @@
 		<title>Brands V3 </title>
 		<meta name="description" content="Eye Care <span>Optical Clinic</span> provides the highest quality of optometry care services in San Diego, CA and the nearby communities. Call (123) 456-7890 today!">
 		<meta name="keywords" content="">
+    
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/common-global.css" rel="stylesheet" type="text/css">
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/site-overrides.css?jxl141305588=jxl141305588" rel="stylesheet" type="text/css">
@@ -274,15 +275,16 @@
 
 
 	
-		<script type="text/javascript" src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/js/common.js?jxl1898761698=jxl1898761698"></script>
-		<!-- Script Injections -->
-        <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/dependencies.js"></script>
-        <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip.js"></script>
-        <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip-utils.js"></script>
-        <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/filesaver.js"></script>
+    <script type="text/javascript" src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/js/common.js?jxl1898761698=jxl1898761698"></script>
+    <!-- Script Injections -->
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/dependencies.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip-utils.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/filesaver.js"></script>
 
-        <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
-
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/lazyimages.js"></script>
+    
         <script>
             $(function () {
                 $(document).on('click', '.text-copy', function () {
@@ -313,7 +315,7 @@
             });
         </script>
 
-		<script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/lazyimages.js"></script>
+		
 		
 
     <script>
@@ -377,7 +379,7 @@
                 });
 
                 if (!response.ok) {
-                    if (response.status === 401) {
+                    if (response.status === 401) {  
                         console.warn('Access token expired, refreshing token...');
                         localStorage.removeItem(TOKEN_STORAGE_KEY);
                         return fetchFilesWithPagination(folderPath);
@@ -399,7 +401,7 @@
         }
     }
   
-    const fetchTemporaryLinks = async (files, batchSize = 100) => {
+    const fetchTemporaryLinks = async (files, batchSize = 600) => {
       let allFilesWithUrls = [];
       for (let i = 0; i < files.length; i += batchSize) {
           const batch = files.slice(i, i + batchSize);
@@ -436,7 +438,7 @@
           const batchWithUrls = await Promise.all(filePromises);
           allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean));
 
-          await delay(100);
+          await delay(50);
       }
       return allFilesWithUrls;
     };
