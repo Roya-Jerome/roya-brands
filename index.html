@@ -15,19 +15,90 @@
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/site.css" rel="stylesheet">
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/color_scheme_1.css" rel="stylesheet">
 		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/overrides.css" rel="stylesheet">
+    <style>
+      #ProgressLoading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #f1f1f1;
+    z-index: 1000;
+}
+
+#loadingProgress {
+    width: 100%;
+    height: 10px;
+}
+
+#progressText {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+#ProgressLoading {
+    position: fixed;
+    top: 65%;
+    transform: translate(0, -50%);
+    z-index: 999999;
+    background: transparent;
+}
+
+#ProgressLoading #progressText {
+    text-align: center;
+    color: #000;
+    font-size: 50px;
+    margin: 0;
+}
+
+#loadingProgress {
+    opacity: 0;
+    height: 0;
+}
+
+body:not(.activated):after {
+    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/waitgif.gif);
+    width: 200px;
+    height: 153px;
+    transition: .3s;
+}
+
+body.progress-25:not(.activated):after {
+    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_25.gif);
+    height: 200px;
+    width: 188px;
+}
+
+body.progress-50:not(.activated):after {
+    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_50gif.gif);
+    width: 200px;
+    height: 200px;
+}
+
+body.progress-90:not(.activated):after {
+    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_100.gif);
+    width: 200px;
+    height: 200px;
+}
+    </style>
 		</head>
 
-	<body class="default">
+	<body class="default" id="brandDefault">
+    
+    <div id="ProgressLoading">
+      <progress id="loadingProgress" value="0" max="100"></progress>
+      <span id="progressText">0%</span>
+  </div>
 		<div class="site-content">
-
-
 		<div id="ry-pg-body" class="col-xs-12 ">
   <div class="col-xs-12 ry-container">
     <div class="col-xs-12 ry-content">
       <div id="brands" class="col-xs-12 brands">
         <div class="filter-group">
           <div class="button-wrapper">
-            <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary" data-folderlocation="_Contact Lens Brand">Brand Logo</a>
+            <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active" data-folderlocation="_Contact Lens Brand">Brand Logo</a>
             <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images Isolated">Brand with Frame</a>
             <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images with Model">Brand with Model</a>
             <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary" data-folderlocation="_Frame Brands">Frame Logo</a>
@@ -61,7 +132,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-lg-9 ry-each brand-list">
-              <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Contact Lens Brand">
+              <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded active" data-folder="_Contact Lens Brand">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -76,7 +147,7 @@
                 </div>
                 
               </div>
-              <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images Isolated">
+              <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait " data-folder="_Brand Images Isolated">
                 <div class="button-hidden hidden">
                   <button type="submit" class="btn btn-primary">Zip them</button>
                   <div class="progress d-none">
@@ -190,238 +261,298 @@
 		<script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/lazyimages.js"></script>
 		
 
-        <script>
+    <script>
+      const imageCache = {};
+      const CLIENT_ID = '66iobk6ar1c2aap';
+      const CLIENT_SECRET = '0bq7obz28la0veh';
+      const REFRESH_TOKEN = 'R2ipmLbhqEkAAAAAAAAAAW307lbz-YT0aYSLfF9ftjQwv5KoogK3Rq_S2rPohMGA';
+      const TOKEN_STORAGE_KEY = 'sl.u.AFgxYp5-VXUEuAlgaDnj91wwtNnCFRxb8p4jlxuVnJmeTGWt9sYa7KNzP1BRsE3S7hOtqPpNb3OAGiXtpyzZwItVmTyioTuF63RhYelp7I8pTWUQYt-_gptg4WjCfIIHPrkm01SMSD61Y-rixT73mJgJQmiIaZtxx4dOB2veJOLJVROhoqhzdsMBW5hEupOXQgOh1SU_sq6KmgNmrDR9-WWFsOGKUX79UKJUnSveCJa1ATcecQnU7tMo71LEB2zzz52FXmseUQUYBmAWUtP17Nvtc2s9RAYe0iQCdPgjbVCCmw-7Dg4yn3OwZt9JhaJrfg57jFN7YtBw75IDBDNdMbtGMHI6ANpSnC8bAJhd6cAEH3FfK8HEqp-EYJATipKW-7Fe2saTXc1ejmzmw2othzApo8H9kZSTUXTl92P5cPFCi0DeHFivhBBUZOp2TIDiXBYAg0NwKfqdHGhuWafKJyEJ6jpKPmQ8TzCcAbDi1ky8Sa6S4evIii-rjnkygU-oPZJBNQB5IYqkRpUwFKcLbQHkhmA47nvp0K7bRX01r3MN-6_B9du5HXK9m-lpkqB3JQILuDOQStQ3v2dI_QpzmQNBSpwHznc2Yp1hDGxSqldJQ9qjloTrO8lNewTO0nRkcyuoxyt0yLHRVuZLfuVEFH7RJj05lX2QDi85HUaqRU0FdLzKwpGMUAjOio5ShdyI-Qk_BNjcX_qATXgJoeCm1cRSAv2WUlP-KZBkLv1-cGzodn91yNq5fSR8V40pJDMAlVl46X10nC6CfuOBOqDbUgEhqQCgobwmVpDOqJR0bY8SjdX5QxqwllRSlxQzsMPo8dGf6X7Ur7SgAgB1D7P8T3VuHkcKg_et4iuwPDtewvSazzUG2B4FrQsAGag41tbDF4f9ESaGe2ElhiVeHwykrhYguwdM7WgmtqMwVI6oMeTVIFDoP3WZT0DQX49yayeFGP8A-M23wkhcdSm5kGps2r2Jsn7fEIdu6Wtkn26bwjawD3xVh0Z18I7QPYtkCPvqQr8zmFFeUWv-aKQaLqT95hzDo_bpU3rRK8YUspVHGZlOg5ZgIsza2uRSeDqhHBo_o9LRRRGQ-jUTv4Xl4TTuytrp_e39PeoTrzDnEINn0R0NeoL9r_S_onVt-l_88KJw0vx4716GG2Qo9JwYXDw031pV7tkSiEZPM2J5bHhSTj71KMfyF1l2pCGM9n65RG17adTqq2swY0Hh6YndBLBn176ecl28fZ4UOun9kpd65pgwADJug8ntS4wCjnpiyXnZDB0udCKju5TO-fCAIes4AE-OhTEo_07AY9W5bU9gv9LhA2MAH2De9FEJK655WTVa6Z497ZXPWx_RfknU5JxN_IKoNh6eVwTuuhC2ZweSt0gdIw';
+  
+      async function getAccessToken() {
+          const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+          if (storedToken) {
+              return storedToken;
+          }
+  
+          const url = 'https://api.dropbox.com/oauth2/token';
+          const params = new URLSearchParams();
+          params.append('grant_type', 'refresh_token');
+          params.append('refresh_token', REFRESH_TOKEN);
+          params.append('client_id', CLIENT_ID);
+          params.append('client_secret', CLIENT_SECRET);
+  
+          try {
+              const response = await fetch(url, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: params
+              });
+  
+              if (!response.ok) {
+                  throw new Error('Failed to refresh token');
+              }
+  
+              const data = await response.json();
+              localStorage.setItem(TOKEN_STORAGE_KEY, data.access_token);
+              return data.access_token;
+          } catch (error) {
+              console.error('Error refreshing token:', error);
+              return null;
+          }
+      }
+  
+      const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  
+      async function fetchFilesWithPagination(folderPath) {
+          let hasMore = true;
+          let cursor = null;
+          let allFiles = [];
+  
+          try {
+              const ACCESS_TOKEN = await getAccessToken();
+  
+              while (hasMore) {
+                  const response = await fetch(`https://api.dropboxapi.com/2/files/list_folder${cursor ? '/continue' : ''}`, {
+                      method: 'POST',
+                      headers: {
+                          'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }),
+                  });
+  
+                  if (!response.ok) {
+                      if (response.status === 401) {
+                          console.warn('Access token expired, refreshing token...');
+                          localStorage.removeItem(TOKEN_STORAGE_KEY);
+                          return fetchFilesWithPagination(folderPath);
+                      }
+                      throw new Error(`Error: ${response.statusText}`);
+                  }
+  
+                  const data = await response.json();
+                  allFiles = allFiles.concat(data.entries);
+                  hasMore = data.has_more;
+                  cursor = data.cursor;
+                  await delay(100);
+              }
+  
+              return allFiles;
+          } catch (error) {
+              console.error('Error fetching files with pagination:', error);
+              throw error;
+          }
+      }
+  
+      const fetchTemporaryLinks = async (files, batchSize = 100) => {
+          let allFilesWithUrls = [];
+          for (let i = 0; i < files.length; i += batchSize) {
+              const batch = files.slice(i, i + batchSize);
+              const filePromises = batch.map(async file => {
+                  try {
+                      const ACCESS_TOKEN = await getAccessToken();
+                      const tempLinkResponse = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
+                          method: 'POST',
+                          headers: {
+                              'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                              'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({ path: file.path_display }),
+                      });
+  
+                      if (!tempLinkResponse.ok) {
+                          if (tempLinkResponse.status === 429) {
+                              const retryAfter = parseInt(tempLinkResponse.headers.get('Retry-After')) || 1000;
+                              console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
+                              await delay(retryAfter);
+                              return null;
+                          }
+                          throw new Error(`Error: ${tempLinkResponse.statusText}`);
+                      }
+  
+                      const tempLinkData = await tempLinkResponse.json();
+                      return { ...file, url: tempLinkData.link };
+                  } catch (error) {
+                      console.error('Error fetching temporary link:', error);
+                      return null;
+                  }
+              });
+  
+              const batchWithUrls = await Promise.all(filePromises);
+              allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean));
+  
+              await delay(500);
+          }
+  
+          return allFilesWithUrls;
+      };
+  
+      const renderFiles = (filesWithUrls, targetDiv) => {
+          targetDiv.innerHTML = '';
+  
+          filesWithUrls.forEach(file => {
+              const divContent = document.createElement('div');
+              divContent.classList.add('each-brand');
+              divContent.innerHTML = `
+                  <div class="brand-image-hover">
+                      <img class="lazyload" src="${file.url}" data-img="${file.url}">
+                  </div>
+                  <div class="brand-form">
+                      <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}">
+                      <input type="hidden" class="data-storage" value="${file.url}" data-name="${file.name}" data-logo="${file.url}">
+                      <p class="name">${file.name}</p>
+                      <div class="copy-clip" data-link="${file.url}">
+                          <div class="copied-toast">Copy Image Url</div>
+                          <span class="text-copy">${file.url}</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path></svg>
+                      </div>
+                  </div>`;
+  
+              targetDiv.appendChild(divContent);
+          });
+  
+          console.log('Images rendered in:', targetDiv);
+      };
+  
+      const loadAllImages = async () => {
+    try {
+        const ACCESS_TOKEN = await getAccessToken();
+        const rootFolderPath = '/_Raw Logo'; // Root folder containing all subfolders
 
-            const imageCache = {};
+        // Fetch all folders inside the root folder
+        const folders = await fetchFilesWithPagination(rootFolderPath);
+        const imageFolders = folders.filter(entry => entry['.tag'] === 'folder');
 
-            const CLIENT_ID = '66iobk6ar1c2aap';
-            const CLIENT_SECRET = '0bq7obz28la0veh';
-            const REFRESH_TOKEN = 'R2ipmLbhqEkAAAAAAAAAAW307lbz-YT0aYSLfF9ftjQwv5KoogK3Rq_S2rPohMGA'; 
-            const TOKEN_STORAGE_KEY = 'sl.u.AFgxYp5-VXUEuAlgaDnj91wwtNnCFRxb8p4jlxuVnJmeTGWt9sYa7KNzP1BRsE3S7hOtqPpNb3OAGiXtpyzZwItVmTyioTuF63RhYelp7I8pTWUQYt-_gptg4WjCfIIHPrkm01SMSD61Y-rixT73mJgJQmiIaZtxx4dOB2veJOLJVROhoqhzdsMBW5hEupOXQgOh1SU_sq6KmgNmrDR9-WWFsOGKUX79UKJUnSveCJa1ATcecQnU7tMo71LEB2zzz52FXmseUQUYBmAWUtP17Nvtc2s9RAYe0iQCdPgjbVCCmw-7Dg4yn3OwZt9JhaJrfg57jFN7YtBw75IDBDNdMbtGMHI6ANpSnC8bAJhd6cAEH3FfK8HEqp-EYJATipKW-7Fe2saTXc1ejmzmw2othzApo8H9kZSTUXTl92P5cPFCi0DeHFivhBBUZOp2TIDiXBYAg0NwKfqdHGhuWafKJyEJ6jpKPmQ8TzCcAbDi1ky8Sa6S4evIii-rjnkygU-oPZJBNQB5IYqkRpUwFKcLbQHkhmA47nvp0K7bRX01r3MN-6_B9du5HXK9m-lpkqB3JQILuDOQStQ3v2dI_QpzmQNBSpwHznc2Yp1hDGxSqldJQ9qjloTrO8lNewTO0nRkcyuoxyt0yLHRVuZLfuVEFH7RJj05lX2QDi85HUaqRU0FdLzKwpGMUAjOio5ShdyI-Qk_BNjcX_qATXgJoeCm1cRSAv2WUlP-KZBkLv1-cGzodn91yNq5fSR8V40pJDMAlVl46X10nC6CfuOBOqDbUgEhqQCgobwmVpDOqJR0bY8SjdX5QxqwllRSlxQzsMPo8dGf6X7Ur7SgAgB1D7P8T3VuHkcKg_et4iuwPDtewvSazzUG2B4FrQsAGag41tbDF4f9ESaGe2ElhiVeHwykrhYguwdM7WgmtqMwVI6oMeTVIFDoP3WZT0DQX49yayeFGP8A-M23wkhcdSm5kGps2r2Jsn7fEIdu6Wtkn26bwjawD3xVh0Z18I7QPYtkCPvqQr8zmFFeUWv-aKQaLqT95hzDo_bpU3rRK8YUspVHGZlOg5ZgIsza2uRSeDqhHBo_o9LRRRGQ-jUTv4Xl4TTuytrp_e39PeoTrzDnEINn0R0NeoL9r_S_onVt-l_88KJw0vx4716GG2Qo9JwYXDw031pV7tkSiEZPM2J5bHhSTj71KMfyF1l2pCGM9n65RG17adTqq2swY0Hh6YndBLBn176ecl28fZ4UOun9kpd65pgwADJug8ntS4wCjnpiyXnZDB0udCKju5TO-fCAIes4AE-OhTEo_07AY9W5bU9gv9LhA2MAH2De9FEJK655WTVa6Z497ZXPWx_RfknU5JxN_IKoNh6eVwTuuhC2ZweSt0gdIw';
-      
-            async function getAccessToken() {
-                const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
-                if (storedToken) {
-                    return storedToken; 
-                }
-      
-                const url = 'https://api.dropbox.com/oauth2/token';
-                const params = new URLSearchParams();
-                params.append('grant_type', 'refresh_token');
-                params.append('refresh_token', REFRESH_TOKEN);
-                params.append('client_id', CLIENT_ID);
-                params.append('client_secret', CLIENT_SECRET);
-      
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: params
-                    });
-      
-                    if (!response.ok) {
-                        throw new Error('Failed to refresh token');
-                    }
-      
-                    const data = await response.json();
-                    localStorage.setItem(TOKEN_STORAGE_KEY, data.access_token); 
-                    return data.access_token;
-                } catch (error) {
-                    console.error('Error refreshing token:', error);
-                    return null;
-                }
+        // Initialize progress bar, progress value, and #brandDefault
+        const progressBar = document.getElementById('loadingProgress');
+        const progressText = document.getElementById('progressText');
+        //const progressValue = document.getElementById('progressValue');
+        const brandDefault = document.getElementById('brandDefault');
+
+        // Calculate total number of images
+        let totalImages = 0;
+        for (const folder of imageFolders) {
+            const folderPath = folder.path_display;
+            const allFiles = await fetchFilesWithPagination(folderPath);
+            const imageFiles = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
+            totalImages += imageFiles.length;
+        }
+
+        let loadedImages = 0;
+
+        // Iterate through each folder and fetch images
+        for (const folder of imageFolders) {
+            const folderPath = folder.path_display;
+            const targetDiv = document.querySelector(`div[data-folder="${folder.name}"]`); // Use folder name as target div ID
+            if (!targetDiv) continue;
+
+            const allFiles = await fetchFilesWithPagination(folderPath);
+            const imageFiles = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
+            const filesWithUrls = await fetchTemporaryLinks(imageFiles);
+
+            // Render images and update progress
+            renderFiles(filesWithUrls, targetDiv);
+            loadedImages += filesWithUrls.length;
+
+            // Calculate progress based on images
+            const progress = Math.round((loadedImages / totalImages) * 100);
+            progressBar.value = progress;
+            progressText.textContent = `${progress}%`;
+            //progressValue.textContent = `${progress}%`;
+
+            // Update #brandDefault class based on progress
+            if (progress > 25 && progress <= 50) {
+                brandDefault.className = 'progress-25';
+            } else if (progress > 50 && progress <= 75) {
+                brandDefault.className = 'progress-50';
+            } else if (progress > 75 && progress < 100) {
+                brandDefault.className = 'progress-75';
+            } else if (progress === 100) {
+                brandDefault.className = 'progress-100';
             }
-      
-            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        }
 
-            async function fetchFilesWithPagination(folderPath) {
-                let hasMore = true;
-                let cursor = null;
-                let allFiles = [];
-      
-                try {
-                    const ACCESS_TOKEN = await getAccessToken(); 
-      
-                    while (hasMore) {
-                        const response = await fetch(`https://api.dropboxapi.com/2/files/list_folder${cursor ? '/continue' : ''}`, {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }),
-                        });
-      
-                        if (!response.ok) {
-                            if (response.status === 401) {
-                                console.warn('Access token expired, refreshing token...');
-                                localStorage.removeItem(TOKEN_STORAGE_KEY); 
-                                return fetchFilesWithPagination(folderPath);
-                            }
-                            throw new Error(`Error: ${response.statusText}`);
-                        }
-      
-                        const data = await response.json();
-                        allFiles = allFiles.concat(data.entries);
-                        hasMore = data.has_more;
-                        cursor = data.cursor;
-                        await delay(100);
-                    }
-      
-                    return allFiles;
-                } catch (error) {
-                    console.error('Error fetching files with pagination:', error);
-                    throw error;
-                }
-            }
-      
-            const fetchTemporaryLinks = async (files, batchSize = 100) => {
-                let allFilesWithUrls = [];
-                for (let i = 0; i < files.length; i += batchSize) {
-                    const batch = files.slice(i, i + batchSize); 
-                    const filePromises = batch.map(async file => {
-                        try {
-                            const ACCESS_TOKEN = await getAccessToken(); 
-                            const tempLinkResponse = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ path: file.path_display }),
-                            });
-      
-                            if (!tempLinkResponse.ok) {
-                                if (tempLinkResponse.status === 429) {
-                                    const retryAfter = parseInt(tempLinkResponse.headers.get('Retry-After')) || 1000;
-                                    console.log(`Rate limit hit. Retrying after ${retryAfter}ms`);
-                                    await delay(retryAfter); 
-                                    return null; 
-                                }
-                                throw new Error(`Error: ${tempLinkResponse.statusText}`);
-                            }
-      
-                            const tempLinkData = await tempLinkResponse.json();
-                            return { ...file, url: tempLinkData.link };
-                        } catch (error) {
-                            console.error('Error fetching temporary link:', error);
-                            return null;
-                        }
-                    });
-      
-                    const batchWithUrls = await Promise.all(filePromises);
-                    allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean)); 
-      
-                    await delay(500); 
-                }
-      
-                return allFilesWithUrls;
-            };
-      
-            const renderFiles = (filesWithUrls, targetDiv) => {
-                targetDiv.innerHTML = '';
-      
-                filesWithUrls.forEach(file => {
-                    const divContent = document.createElement('div');
-                    divContent.classList.add('each-brand');
-                    divContent.innerHTML = `
-                        <div class="brand-image-hover">
-                            <img class="lazyload" src="${file.url}" data-img="${file.url}">
-                        </div>
-                        <div class="brand-form">
-                            <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}">
-                            <input type="hidden" class="data-storage" value="${file.url}" data-name="${file.name}" data-logo="${file.url}">
-                            <p class="name">${file.name}</p>
-                            <div class="copy-clip" data-link="${file.url}">
-                                <div class="copied-toast">Copy Image Url</div>
-                                <span class="text-copy">${file.url}</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path></svg>
-                            </div>
-                        </div>`;
-      
-                    targetDiv.appendChild(divContent);
-                });
-      
-                console.log('Images rendered in:', targetDiv);
-            };
-      
-            const loadImagesForFolder = async (folderLocation, targetDiv) => {
-                try {
-                    console.log(`Fetching files in folder: ${folderLocation}`);
-                    const folderPath = `/_Raw Logo/${folderLocation}`;
-      
-                    if (imageCache[folderLocation]) {
-                        console.log('Images found in cache. Rendering from cache.');
-                        renderFiles(imageCache[folderLocation], targetDiv);
-                        return;
-                    }
-      
-                    const allFiles = await fetchFilesWithPagination(folderPath);
-      
-                    const files = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
-                    console.log('Filtered image files:', files);
-      
-                    const filesWithUrls = await fetchTemporaryLinks(files);
-                    console.log('Files with temporary links:', filesWithUrls);
-      
-                    imageCache[folderLocation] = filesWithUrls;
-      
-                    renderFiles(filesWithUrls, targetDiv);
-                } catch (error) {
-                    console.error('Error fetching files in folder:', error);
-                }
-            };
-      
-            document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
+        // After all images are loaded, run the additional logic
+        processBrands();
+
+        // Hide progress bar and progress value after loading is complete
+        document.getElementById('ProgressLoading').style.display = 'none';
+        //document.getElementById('progressValueContainer').style.display = 'none';
+    } catch (error) {
+        console.error('Error loading all images:', error);
+    }
+};
+
+// Function to process brands after images are loaded
+const processBrands = () => {
+    function removeNumberPrefixAndCapitalize(text) {
+        let cleanedText = text.replace(/^\d+[-_]?/, '');
+        return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);
+    }
+
+    $('.brand-box-container .each-brand').each(function () {
+        var cleanedText = removeNumberPrefixAndCapitalize($('p', this).text());
+        $('p', this).text(cleanedText);
+
+        var letter = cleanedText.charAt(0);
+        var data = $(this).html();
+        if (!$(this).parent().find('[data-letter="' + letter + '"]').length) {
+            $(this).parent().append('<div data-count="' + letter + '" class="brand-letter-group"><span class="headline-letter">' + letter + '</span><ul class="list" data-letter="' + letter + '"></ul></div>');
+
+            let container = $(this).parent();
+            let groups = container.find('.brand-letter-group');
+
+            groups.sort(function (a, b) {
+                return $(a).data('count').localeCompare($(b).data('count'));
+            });
+
+            groups.detach().appendTo(container);
+        }
+        $(this).parent().find('[data-letter="' + letter + '"]').append(this);
+    });
+
+    $('.brand-box-container .list .each-brand').wrap('<li>');
+    $(".copied-toast").hide();
+
+    initIsotope(); // Initialize Isotope after rendering
+
+    $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+    $('.clear-all-check').hide();
+    $('.brand-container .ry-flex .brand-text .count').text('0');
+    $('.download.button-download').addClass('disabled');
+    $('body').addClass('activated');
+};
+
+// Load all images on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadAllImages();
+});
+    
+
+
+    
+
+      document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
                 button.addEventListener('click', async () => {
                     const target = button.getAttribute('data-target');
-                    const folderLocation = button.getAttribute('data-folderlocation');
+                    //const folderLocation = button.getAttribute('data-folderlocation');
                     const targetDiv = document.querySelector(target);
-      
+                    /*
                     if (!targetDiv) {
                         console.error(`Target div not found for: ${target}`);
                         return;
                     }
-      
+                    */
                     document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
       
                     document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
                     targetDiv.classList.add('active');
-      
-                    await loadImagesForFolder(folderLocation, targetDiv);
+                    
+                    //await loadImagesForFolder(folderLocation, targetDiv);
                     targetDiv.classList.remove('animated-wait');
-                    function removeNumberPrefixAndCapitalize(text) {
-                        let cleanedText = text.replace(/^\d+[-_]?/, '');
-                        return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);  
-                    }
-      
-                    $('.brand-box-container .each-brand').each(function () {
-                        var cleanedText = removeNumberPrefixAndCapitalize($('p', this).text());
-                        $('p', this).text(cleanedText);
-      
-                        var letter = cleanedText.charAt(0);
-                        var data = $(this).html();
-                        if (!$(this).parent().find('[data-letter="'+ letter +'"]').length) {
-                            $(this).parent().append('<div data-count="'+ letter +'" class="brand-letter-group"><span class="headline-letter">'+ letter +'</span><ul class="list" data-letter="'+ letter +'"></ul></div>');
-      
-                            let container = $(this).parent();
-                            let groups = container.find('.brand-letter-group');
-      
-                            groups.sort(function(a, b) {
-                                return $(a).data('count').localeCompare($(b).data('count'));
-                            });
-      
-                            groups.detach().appendTo(container);
-      
-                        }
-                        $(this).parent().find('[data-letter="'+ letter +'"]').append(this);
-                    });
-      
-                    $('.brand-box-container .list .each-brand').wrap('<li>');
-                    $(".copied-toast").hide();
-      
-                    initIsotope(); // Initialize Isotope after rendering
+                    
+                    initIsotope(); 
 
                     $('.brand-box-container input[type="checkbox"]').prop('checked', false);
                     $('.clear-all-check').hide();
@@ -431,8 +562,10 @@
                     links = [];
                 });
             });
+
             var qsRegex;
-  var $grid;
+            var $grid;
+
 
   // Function to initialize Isotope
   function initIsotope() {
@@ -444,7 +577,7 @@
       }
     });
 
-    $('body').addClass('activated');
+    //$('body').addClass('activated');
   }
 
   // Function to update filter
@@ -480,7 +613,7 @@
 
   // Wait for the DOM to be ready
   $(document).ready(function () {
-    setTimeout(initIsotope, 1000);
+    //setTimeout(initIsotope, 1000);
 
     // Search input event
     $('.search').on('keyup', debounce(updateFilter, 100));
@@ -499,14 +632,14 @@
       observer.observe(targetNode, { childList: true, subtree: true });
     }
   });
-      </script>
+  </script>
 
 
 <script>
 
   var links = [];
   $(function () {
-    $('body').addClass('activated')
+    
     $('.brand-box-container .each-brand').hover(function() {
         var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
         console.log(img__hover);
@@ -645,4 +778,3 @@
 </script>
 	</body>
 </html>
-
