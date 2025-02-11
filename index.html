@@ -24,223 +24,253 @@
         font-family: Inter !important;
       }
       #ProgressLoading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #f1f1f1;
-    z-index: 1000;
-}
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: #f1f1f1;
+          z-index: 1000;
+      }
 
-#loadingProgress {
-    width: 100%;
-    height: 10px;
-}
+        #loadingProgress {
+            width: 100%;
+            height: 10px;
+        }
 
-#progressText {
-    display: block;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 5px;
-}
+        #progressText {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
 
-#ProgressLoading {
-    position: fixed;
-    top: 65%;
-    transform: translate(0, -50%);
-    z-index: 999999;
-    background: transparent;
-}
+        #ProgressLoading {
+            position: fixed;
+            top: 65%;
+            transform: translate(0, -50%);
+            z-index: 999999;
+            background: transparent;
+        }
 
-#ProgressLoading #progressText {
-    text-align: center;
-    color: #000;
-    font-size: 50px;
-    margin: 0;
-}
+        #ProgressLoading #progressText {
+            text-align: center;
+            color: #000;
+            font-size: 50px;
+            margin: 0;
+            display: none;
+        }
 
-#loadingProgress {
-    opacity: 0;
-    height: 0;
-}
+        #loadingProgress {
+            opacity: 0;
+            height: 0;
+        }
 
-body:not(.activated):after {
-    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/waitgif.gif);
-    width: 200px;
-    height: 153px;
-    transition: .3s;
-}
+        body:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/waitgif.gif);
+            width: 200px;
+            height: 153px;
+            transition: .3s;
+        }
 
-body.progress-20:not(.activated):after {
-    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_25.gif);
-    height: 200px;
-    width: 188px;
-}
+        body.progress-20:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_25.gif);
+            height: 200px;
+            width: 188px;
+        }
 
-body.progress-40:not(.activated):after {
-    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_50gif.gif);
-    width: 200px;
-    height: 200px;
-}
-body.progress-60:not(.activated):after {
-    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/80cat.gif);
-    width: 250px;
-    height: 227px;
-}
+        body.progress-40:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_50gif.gif);
+            width: 200px;
+            height: 200px;
+        }
+        body.progress-60:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/80cat.gif);
+            width: 250px;
+            height: 227px;
+        }
 
-body.progress-80:not(.activated):after {
-  background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
-    width: 250px;
-    height: 220px;
-    background-size: cover;
-}
-body.progress-90:not(.activated):after {
-    background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
-    width: 250px;
-    height: 220px;
-    background-size: cover;
-}
+        body.progress-80:not(.activated):after {
+          background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
+            width: 250px;
+            height: 220px;
+            background-size: cover;
+        }
+        body.progress-90:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
+            width: 250px;
+            height: 220px;
+            background-size: cover;
+        }
 
-.brand-box-container.animated-wait:before, 
-.brand-box-container.animated-wait:after {
-    display: none;
-}
+        .brand-box-container.animated-wait:before, 
+        .brand-box-container.animated-wait:after {
+            display: none;
+        }
+        .customProgress {
+            max-width: 320px;
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border-radius: 30px;
+            height: 20px;
+            background: #dddddd;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+        }
 
+        .customProgress #loadingwidth {
+            background: #fff;
+            top: 50%;
+            border-radius: 15px;
+            background: #fba48a;
+            height: 100%;
+            border: unset;
+            transition: 1s;
+        }
+
+        #loadingProgress {
+            visibility: hidden;
+            display: none;
+        }
     </style>
 		</head>
 
 	<body class="default" id="brandDefault">
     
     <div id="ProgressLoading">
-      <progress id="loadingProgress" value="0" max="100"></progress>
+      <div class="customProgress">
+        <progress id="loadingProgress" value="0" max="100"></progress>
+        <div id="loadingwidth" style="width: 0;"></div>
+      </div>
       <span id="progressText">0%</span>
-  </div>
+    </div>
 		<div class="site-content">
 		<div id="ry-pg-body" class="col-xs-12 ">
-  <div class="col-xs-12 ry-container">
-    <div class="col-xs-12 ry-content">
-      <div id="brands" class="col-xs-12 brands">
-        <div class="filter-group">
-          <div class="button-wrapper">
-            <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active" data-folderlocation="_Contact Lens Brand">Brand Logo</a>
-            <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images Isolated">Brand with Frame</a>
-            <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images with Model">Brand with Model</a>
-            <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary" data-folderlocation="_Frame Brands">Frame Logo</a>
-            <a href="javascript:void(0)" data-target="#Payment-Options" class="ry-btn ry-btn-primary" data-folderlocation="_Payment Options">Payment Logo</a>
-          </div>
-          <div class="search-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-            </svg>
-            <input name="SearchData" class="search" placeholder="Search Brand Logo Here!">
+      <div class="col-xs-12 ry-container">
+        <div class="col-xs-12 ry-content">
+          <div id="brands" class="col-xs-12 brands">
+            <div class="filter-group">
+              <div class="button-wrapper">
+                <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active" data-folderlocation="_Contact Lens Brand">Brand Logo</a>
+                <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images Isolated">Brand with Frame</a>
+                <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images with Model">Brand with Model</a>
+                <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary" data-folderlocation="_Frame Brands">Frame Logo</a>
+                <a href="javascript:void(0)" data-target="#Payment-Options" class="ry-btn ry-btn-primary" data-folderlocation="_Payment Options">Payment Logo</a>
+              </div>
+              <div class="search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                </svg>
+                <input name="SearchData" class="search" placeholder="Search Brand Logo Here!">
+              </div>
+            </div>
+            <div class="col-xs-12 brand-container">
+              <div class="col-xs-12 ry-flex">
+                <div class="col-xs-12 col-lg-3 ry-each brand-text">
+                  <div class="ry-text">
+                    <p>You Selected <br>
+                      <b>
+                        <span class="count">0</span> Logos </b> from the list.
+                    </p>
+                    <div onclick="generateZIP()" class="download button-download">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                      </svg>Download now
+                    </div>
+                    <a href="javascript:void(0);" class="clear-all-check" style="display: none;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"></path>
+                      </svg> clear all </a>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-lg-9 ry-each brand-list">
+                  <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded active" data-folder="_Contact Lens Brand">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait " data-folder="_Brand Images Isolated">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Brand-Images-with-Model" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images with Model">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Frame-Brands" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Frame Brands">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Payment-Options" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Payment Options">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-xs-12 brand-container">
-          <div class="col-xs-12 ry-flex">
-            <div class="col-xs-12 col-lg-3 ry-each brand-text">
-              <div class="ry-text">
-                <p>You Selected <br>
-                  <b>
-                    <span class="count">0</span> Logos </b> from the list.
-                </p>
-                <div onclick="generateZIP()" class="download button-download">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-                  </svg>Download now
-                </div>
-                <a href="javascript:void(0);" class="clear-all-check" style="display: none;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"></path>
-                  </svg> clear all </a>
-              </div>
-            </div>
-            <div class="col-xs-12 col-lg-9 ry-each brand-list">
-              <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded active" data-folder="_Contact Lens Brand">
-                <div class="button-hidden hidden">
-                  <button type="submit" class="btn btn-primary">Zip them</button>
-                  <div class="progress d-none">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                </div>
-                <div class="hidden">
-                  <div class="progress hide" id="progress_bar">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                  <p class="hide" id="result"></p>
-                </div>
-                
-              </div>
-              <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait " data-folder="_Brand Images Isolated">
-                <div class="button-hidden hidden">
-                  <button type="submit" class="btn btn-primary">Zip them</button>
-                  <div class="progress d-none">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                </div>
-                <div class="hidden">
-                  <div class="progress hide" id="progress_bar">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                  <p class="hide" id="result"></p>
-                </div>
-                
-              </div>
-              <div id="Brand-Images-with-Model" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images with Model">
-                <div class="button-hidden hidden">
-                  <button type="submit" class="btn btn-primary">Zip them</button>
-                  <div class="progress d-none">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                </div>
-                <div class="hidden">
-                  <div class="progress hide" id="progress_bar">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                  <p class="hide" id="result"></p>
-                </div>
-                
-              </div>
-              <div id="Frame-Brands" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Frame Brands">
-                <div class="button-hidden hidden">
-                  <button type="submit" class="btn btn-primary">Zip them</button>
-                  <div class="progress d-none">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                </div>
-                <div class="hidden">
-                  <div class="progress hide" id="progress_bar">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                  <p class="hide" id="result"></p>
-                </div>
-                
-              </div>
-              <div id="Payment-Options" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Payment Options">
-                <div class="button-hidden hidden">
-                  <button type="submit" class="btn btn-primary">Zip them</button>
-                  <div class="progress d-none">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                </div>
-                <div class="hidden">
-                  <div class="progress hide" id="progress_bar">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                  </div>
-                  <p class="hide" id="result"></p>
-                </div>
-                
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-    
-    </div>
-  </div>
-</div>
 
 
 	
@@ -398,7 +428,7 @@ body.progress-90:not(.activated):after {
                   const tempLinkData = await tempLinkResponse.json();
                   return { ...file, url: tempLinkData.link };
               } catch (error) {
-                  console.error('Error fetching temporary link:', error);
+                  //console.error('Error fetching temporary link:', error);
                   return null;
               }
           });
@@ -441,34 +471,31 @@ body.progress-90:not(.activated):after {
     const loadAllImages = async () => {
     try {
         const ACCESS_TOKEN = await getAccessToken();
-        const rootFolderPath = '/_Raw Logo'; // Root folder containing all subfolders
+        const rootFolderPath = '/_Raw Logo'; // Root folder
 
-        // Fetch all folders inside the root folder
         const folders = await fetchFilesWithPagination(rootFolderPath);
         const imageFolders = folders.filter(entry => entry['.tag'] === 'folder');
 
-        console.log(`Total folders found: ${imageFolders.length}`); // Debugging
+        console.log(`Total folders found: ${imageFolders.length}`); 
 
-        // Initialize progress bar, progress text, and #brandDefault
         const progressBar = document.getElementById('loadingProgress');
         const progressText = document.getElementById('progressText');
         const brandDefault = document.getElementById('brandDefault');
+        const loadWidth = document.getElementById('loadingwidth');
 
-        // Total number of folders to process
         const totalFolders = imageFolders.length;
         let completedFolders = 0;
 
-        // Iterate through each folder and fetch images
         for (const folder of imageFolders) {
             const folderPath = folder.path_display;
-            const targetDiv = document.querySelector(`div[data-folder="${folder.name}"]`); // Use folder name as target div ID
+            const targetDiv = document.querySelector(`div[data-folder="${folder.name}"]`); 
 
             if (!targetDiv) {
-                console.warn(`Target div not found for folder: ${folder.name}`); // Debugging
+                console.warn(`Target div not found for folder: ${folder.name}`);
                 continue;
             }
 
-            console.log(`Processing folder: ${folder.name}`); // Debugging
+            console.log(`Processing folder: ${folder.name}`);
 
             const allFiles = await fetchFilesWithPagination(folderPath);
             const imageFiles = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
@@ -477,16 +504,15 @@ body.progress-90:not(.activated):after {
             renderFiles(filesWithUrls, targetDiv);
             completedFolders++;
 
-            console.log(`Completed folder: ${folder.name} (${completedFolders}/${totalFolders})`); // Debugging
+            console.log(`Completed folder: ${folder.name} (${completedFolders}/${totalFolders})`);
 
-            // Update progress bar and text based on completed folders
             const progress = Math.round((completedFolders / 5) * 100);
             progressBar.value = progress;
             progressText.textContent = `${progress}%`;
+            loadWidth.style.width = `${progress}%`; 
 
-            console.log(`Progress: ${progress}%`); // Debugging
+            //console.log(`Progress: ${progress}%`);
 
-            // Update brandDefault class based on progress
             if (progress > 1 && progress <= 20) {
                 brandDefault.className = 'progress-20';
             } else if (progress > 20 && progress <= 40) {
@@ -502,124 +528,104 @@ body.progress-90:not(.activated):after {
             }
         }
 
-        console.log('All folders processed.'); // Debugging
-
-        // Process brands after all folders are completed
+        console.log('All folders processed.');
         processBrands();
 
-        
-        
-        
-    } catch (error) {
-        console.error('Error loading all images:', error);
-    }
-};
-
-// Function to process brands after images are loaded
-const processBrands = () => {
-    const removeNumberPrefixAndCapitalize = (text) => {
-        let cleanedText = text.replace(/^\d+[-_]?/, '');
-        return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);
+      } catch (error) {
+          //console.error('Error loading all images:', error);
+      }
     };
 
-    document.querySelectorAll('.brand-box-container .each-brand').forEach(brandElement => {
-        const brandTextElement = brandElement.querySelector('p');
-        const brandCheckbox = brandElement.querySelector('input[type="checkbox"]');
-        const cleanedText = removeNumberPrefixAndCapitalize(brandTextElement.textContent);
-        const cleanedTextName = removeNumberPrefixAndCapitalize(brandCheckbox.value);
+    const processBrands = () => {
+      const removeNumberPrefixAndCapitalize = (text) => {
+          let cleanedText = text.replace(/^\d+[-_]?/, '');
+          return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);
+      };
 
-        brandTextElement.textContent = cleanedText;
-        brandCheckbox.value = cleanedTextName;
+      document.querySelectorAll('.brand-box-container .each-brand').forEach(brandElement => {
+          const brandTextElement = brandElement.querySelector('p');
+          const brandCheckbox = brandElement.querySelector('input[type="checkbox"]');
+          const cleanedText = removeNumberPrefixAndCapitalize(brandTextElement.textContent);
+          const cleanedTextName = removeNumberPrefixAndCapitalize(brandCheckbox.value);
 
-        const letter = cleanedText.charAt(0);
-        const parentElement = brandElement.parentElement;
+          brandTextElement.textContent = cleanedText;
+          brandCheckbox.value = cleanedTextName;
 
-        if (!parentElement.querySelector(`[data-letter="${letter}"]`)) {
-            const brandLetterGroup = document.createElement('div');
-            brandLetterGroup.setAttribute('data-count', letter);
-            brandLetterGroup.className = 'brand-letter-group';
-            brandLetterGroup.innerHTML = `<span class="headline-letter">${letter}</span><ul class="list" data-letter="${letter}"></ul>`;
-            parentElement.appendChild(brandLetterGroup);
+          const letter = cleanedText.charAt(0);
+          const parentElement = brandElement.parentElement;
 
-            // Sort brand groups alphabetically
-            const groups = Array.from(parentElement.querySelectorAll('.brand-letter-group'));
-            groups.sort((a, b) => a.dataset.count.localeCompare(b.dataset.count));
-            groups.forEach(group => parentElement.appendChild(group));
-        }
+          if (!parentElement.querySelector(`[data-letter="${letter}"]`)) {
+              const brandLetterGroup = document.createElement('div');
+              brandLetterGroup.setAttribute('data-count', letter);
+              brandLetterGroup.className = 'brand-letter-group';
+              brandLetterGroup.innerHTML = `<span class="headline-letter">${letter}</span><ul class="list" data-letter="${letter}"></ul>`;
+              parentElement.appendChild(brandLetterGroup);
 
-        const letterList = parentElement.querySelector(`[data-letter="${letter}"]`);
-        letterList.appendChild(brandElement);
-    });
+              const groups = Array.from(parentElement.querySelectorAll('.brand-letter-group'));
+              groups.sort((a, b) => a.dataset.count.localeCompare(b.dataset.count));
+              groups.forEach(group => parentElement.appendChild(group));
+          }
 
-    document.querySelectorAll('.brand-box-container .list .each-brand').forEach(brandElement => {
-        const listItem = document.createElement('li');
-        brandElement.parentNode.insertBefore(listItem, brandElement);
-        listItem.appendChild(brandElement);
-    });
-
-    document.querySelectorAll(".copied-toast").forEach(toast => toast.style.display = 'none');
-
-    initIsotope(); // Initialize Isotope after rendering
-
-    document.querySelectorAll('.brand-box-container input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-    document.querySelector('.clear-all-check').style.display = 'none';
-    document.querySelector('.brand-container .ry-flex .brand-text .count').textContent = '0';
-    document.querySelector('.download.button-download').classList.add('disabled');
-    
-    // Hide the progress loader
-    setTimeout(function () {
-      document.body.classList.add('activated');
-      document.getElementById('ProgressLoading').style.display = 'none'; 
-    }, 1500);
-    
-};
-
-// Load all images on page load
-document.addEventListener('DOMContentLoaded', () => {
-    loadAllImages();
-    
-});
-
-
-    
-
-      document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
-        button.addEventListener('click', async () => {
-            
-            const target = button.getAttribute('data-target');
-            //const folderLocation = button.getAttribute('data-folderlocation');
-            const targetDiv = document.querySelector(target);
-   
-            document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
-            targetDiv.classList.add('active');
-            
-            //await loadImagesForFolder(folderLocation, targetDiv);
-            targetDiv.classList.remove('animated-wait');
-            
-          
-
-            $('.brand-box-container input[type="checkbox"]').prop('checked', false);
-            $('.clear-all-check').hide();
-            $('.brand-container .ry-flex .brand-text .count').text('0');
-            $('.download.button-download').addClass('disabled');
-
-            links = [];
-
-            initIsotope(); 
-        });
+          const letterList = parentElement.querySelector(`[data-letter="${letter}"]`);
+          letterList.appendChild(brandElement);
       });
 
-            
+      document.querySelectorAll('.brand-box-container .list .each-brand').forEach(brandElement => {
+          const listItem = document.createElement('li');
+          brandElement.parentNode.insertBefore(listItem, brandElement);
+          listItem.appendChild(brandElement);
+      });
+
+      document.querySelectorAll(".copied-toast").forEach(toast => toast.style.display = 'none');
+
+      initIsotope();
+
+      document.querySelectorAll('.brand-box-container input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+      document.querySelector('.clear-all-check').style.display = 'none';
+      document.querySelector('.brand-container .ry-flex .brand-text .count').textContent = '0';
+      document.querySelector('.download.button-download').classList.add('disabled');
+      
+      setTimeout(function () {
+        document.body.classList.add('activated');
+        document.getElementById('ProgressLoading').style.display = 'none'; 
+      }, 1000);
+    
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAllImages(); // Load Images
+    });
+
+    document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
+      button.addEventListener('click', async () => {
+          
+          const target = button.getAttribute('data-target');
+          const targetDiv = document.querySelector(target);
+  
+          document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
+          targetDiv.classList.add('active');
+
+          targetDiv.classList.remove('animated-wait');
+          
+          $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+          $('.clear-all-check').hide();
+          $('.brand-container .ry-flex .brand-text .count').text('0');
+          $('.download.button-download').addClass('disabled');
+
+          links = [];
+
+          initIsotope(); 
+      });
+    });    
   </script>
 
 
-<script>
-var qsRegex;
-    var $grid;
-
+  <script>
+  var qsRegex;
+  var $grid;
 
   // Function to initialize Isotope
   function initIsotope() {
@@ -664,14 +670,11 @@ var qsRegex;
     };
   }
 
-  // Wait for the DOM to be ready
   $(document).ready(function () {
-    //setTimeout(initIsotope, 1000);
-
-    // Search input event
+    // Search input
     $('.search').on('keyup', debounce(updateFilter, 100));
 
-    // MutationObserver to detect dynamically added elements
+    // MutationObserver 
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.addedNodes.length) {
@@ -687,43 +690,42 @@ var qsRegex;
   });
 
   var links = [];
-    $(function () {
-    
+  $(function () { 
     $('.brand-box-container .each-brand').hover(function() {
-        var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
-        console.log(img__hover);
-        $(this).find('.brand-image-hover img').attr('src', img__hover);
+      var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
+      console.log(img__hover);
+      $(this).find('.brand-image-hover img').attr('src', img__hover);
     });
 
     $('.download.button-download').addClass('disabled');
     $(document).on('click', '.brand-box-container input[type="checkbox"]', function () {
-        if ($(this).is(':checked')) {
-            $(this).removeClass().addClass('thumbChecked');
-          links.push({
-  url: $(this).data('url'),
-  value: $(this).val()
-});
-            if (links.length !== 0) {
-                $('.download').removeClass('download-disable');
-            } else {
-                $('.download').addClass('download-disable');
-            }
-            console.log(links);
+      if ($(this).is(':checked')) {
+        $(this).removeClass().addClass('thumbChecked');
+        links.push({
+          url: $(this).data('url'),
+          value: $(this).val()
+        });
+        if (links.length !== 0) {
+            $('.download').removeClass('download-disable');
         } else {
-            $(this).removeClass().addClass('thumb');
-
-            var itemtoRemove = $(this).attr('data-url');
-            links.splice($.inArray(itemtoRemove, links), 1);
-            console.log(links);
-
-            if (links.length == 0) {
-                $('.download').addClass('download-disable');
-            }
+            $('.download').addClass('download-disable');
         }
+        console.log(links);
+      } else {
+        $(this).removeClass().addClass('thumb');
 
-        var countData = links.length;
-        $('.brand-container .ry-flex .brand-text .count').text(countData);
+        var itemtoRemove = $(this).attr('data-url');
+        links.splice($.inArray(itemtoRemove, links), 1);
+        console.log(links);
 
+        if (links.length == 0) {
+            $('.download').addClass('download-disable');
+        }
+      }
+
+      var countData = links.length;
+
+      $('.brand-container .ry-flex .brand-text .count').text(countData);
         if (countData >= 1) { 
             $('.clear-all-check').show();
             $('.download.button-download').removeClass('disabled');
@@ -731,29 +733,26 @@ var qsRegex;
             $('.clear-all-check').hide();
             $('.download.button-download').addClass('disabled');
         }
-    });
+      });
 
-    $('.clear-all-check').click(function() {
-        $('.brand-box-container input[type="checkbox"]').prop('checked', false);
-        $('.clear-all-check').hide();
-        $('.brand-container .ry-flex .brand-text .count').text('0');
-        $('.download.button-download').addClass('disabled');
-        links = [];
-    });
+      $('.clear-all-check').click(function() {
+          $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+          $('.clear-all-check').hide();
+          $('.brand-container .ry-flex .brand-text .count').text('0');
+          $('.download.button-download').addClass('disabled');
+          links = [];
+      });
     $( window ).scroll(function() {
       var height = $(window).scrollTop();
-
       if(height  > 300) {
-
         $('.brands .filter-group').addClass('fixed');
         $('.brand-container').addClass('fixed');
 
-      }else{
+      } else {
 
         $('.brands .filter-group').removeClass('fixed');
         $('.brand-container').removeClass('fixed');
       }
-
     });
   });
 
@@ -785,8 +784,7 @@ var qsRegex;
             }
         });
     });
-}
-
+  }
 
 </script>
 	</body>
