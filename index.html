@@ -391,7 +391,7 @@
                 allFiles = allFiles.concat(data.entries);
                 hasMore = data.has_more;
                 cursor = data.cursor;
-                await delay(50);
+                await delay(100);
             }
 
             return allFiles;
@@ -438,7 +438,7 @@
           const batchWithUrls = await Promise.all(filePromises);
           allFilesWithUrls = allFilesWithUrls.concat(batchWithUrls.filter(Boolean));
 
-          await delay(50);
+          await delay(100);
       }
       return allFilesWithUrls;
     };
