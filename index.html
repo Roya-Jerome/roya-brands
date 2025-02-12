@@ -319,12 +319,18 @@
 		
 
     <script>
-      const imageCache = {};
+	    /*
+      
       const CLIENT_ID = '66iobk6ar1c2aap';
       const CLIENT_SECRET = '0bq7obz28la0veh';
       const REFRESH_TOKEN = 'R2ipmLbhqEkAAAAAAAAAAW307lbz-YT0aYSLfF9ftjQwv5KoogK3Rq_S2rPohMGA';
       const TOKEN_STORAGE_KEY = 'sl.u.AFgxYp5-VXUEuAlgaDnj91wwtNnCFRxb8p4jlxuVnJmeTGWt9sYa7KNzP1BRsE3S7hOtqPpNb3OAGiXtpyzZwItVmTyioTuF63RhYelp7I8pTWUQYt-_gptg4WjCfIIHPrkm01SMSD61Y-rixT73mJgJQmiIaZtxx4dOB2veJOLJVROhoqhzdsMBW5hEupOXQgOh1SU_sq6KmgNmrDR9-WWFsOGKUX79UKJUnSveCJa1ATcecQnU7tMo71LEB2zzz52FXmseUQUYBmAWUtP17Nvtc2s9RAYe0iQCdPgjbVCCmw-7Dg4yn3OwZt9JhaJrfg57jFN7YtBw75IDBDNdMbtGMHI6ANpSnC8bAJhd6cAEH3FfK8HEqp-EYJATipKW-7Fe2saTXc1ejmzmw2othzApo8H9kZSTUXTl92P5cPFCi0DeHFivhBBUZOp2TIDiXBYAg0NwKfqdHGhuWafKJyEJ6jpKPmQ8TzCcAbDi1ky8Sa6S4evIii-rjnkygU-oPZJBNQB5IYqkRpUwFKcLbQHkhmA47nvp0K7bRX01r3MN-6_B9du5HXK9m-lpkqB3JQILuDOQStQ3v2dI_QpzmQNBSpwHznc2Yp1hDGxSqldJQ9qjloTrO8lNewTO0nRkcyuoxyt0yLHRVuZLfuVEFH7RJj05lX2QDi85HUaqRU0FdLzKwpGMUAjOio5ShdyI-Qk_BNjcX_qATXgJoeCm1cRSAv2WUlP-KZBkLv1-cGzodn91yNq5fSR8V40pJDMAlVl46X10nC6CfuOBOqDbUgEhqQCgobwmVpDOqJR0bY8SjdX5QxqwllRSlxQzsMPo8dGf6X7Ur7SgAgB1D7P8T3VuHkcKg_et4iuwPDtewvSazzUG2B4FrQsAGag41tbDF4f9ESaGe2ElhiVeHwykrhYguwdM7WgmtqMwVI6oMeTVIFDoP3WZT0DQX49yayeFGP8A-M23wkhcdSm5kGps2r2Jsn7fEIdu6Wtkn26bwjawD3xVh0Z18I7QPYtkCPvqQr8zmFFeUWv-aKQaLqT95hzDo_bpU3rRK8YUspVHGZlOg5ZgIsza2uRSeDqhHBo_o9LRRRGQ-jUTv4Xl4TTuytrp_e39PeoTrzDnEINn0R0NeoL9r_S_onVt-l_88KJw0vx4716GG2Qo9JwYXDw031pV7tkSiEZPM2J5bHhSTj71KMfyF1l2pCGM9n65RG17adTqq2swY0Hh6YndBLBn176ecl28fZ4UOun9kpd65pgwADJug8ntS4wCjnpiyXnZDB0udCKju5TO-fCAIes4AE-OhTEo_07AY9W5bU9gv9LhA2MAH2De9FEJK655WTVa6Z497ZXPWx_RfknU5JxN_IKoNh6eVwTuuhC2ZweSt0gdIw';
-  
+  	*/
+	    const imageCache = {};
+	    const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const TOKEN_STORAGE_KEY = process.env.TOKEN_STORAGE_KEY;
       async function getAccessToken() {
         const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
         if (storedToken) {
