@@ -13,15 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install dependencies and build
+    - name: Deploy to GitHub Pages (or other hosting provider)
       run: |
-        npm install
-        npm run build # Use if you're using a bundler like Webpack or any build tool
+        # If you're deploying to GitHub Pages
+        # Simply copy the files to the `gh-pages` branch or use a deploy tool
+        echo "Deploying static website"
+      
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-
-    - name: Deploy to GitHub Pages (or other hosting provider)
-      run: |
-        # Add commands to deploy the built static files to GitHub Pages, Netlify, Vercel, etc.
