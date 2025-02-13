@@ -642,7 +642,7 @@ async function fetchFilesWithPagination(folderPath) {
     }
 }
 
-const fetchTemporaryLinks = async (files, batchSize = 600) => {
+const fetchTemporaryLinks = async (files, batchSize = 300) => {
   let allFilesWithUrls = [];
   for (let i = 0; i < files.length; i += batchSize) {
       const batch = files.slice(i, i + batchSize);
