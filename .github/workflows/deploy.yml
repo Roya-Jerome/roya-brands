@@ -1,0 +1,27 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to the branch you want to trigger deployments from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build # Use if you're using a bundler like Webpack or any build tool
+      env:
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+
+    - name: Deploy to GitHub Pages (or other hosting provider)
+      run: |
+        # Add commands to deploy the built static files to GitHub Pages, Netlify, Vercel, etc.
