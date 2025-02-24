@@ -650,7 +650,7 @@ async function fetchFilesWithPagination(folderPath) {
     }
 }
 
-const fetchTemporaryLinks = async (files, batchSize = 300) => {
+const fetchTemporaryLinks = async (files, batchSize = 200) => {
   let allFilesWithUrls = [];
   for (let i = 0; i < files.length; i += batchSize) {
       const batch = files.slice(i, i + batchSize);
@@ -679,7 +679,6 @@ const fetchTemporaryLinks = async (files, batchSize = 300) => {
               const tempLinkData = await tempLinkResponse.json();
               return { ...file, url: tempLinkData.link };
           } catch (error) {
-              //console.error('Error fetching temporary link:', error);
               return null;
           }
       });
@@ -881,30 +880,45 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
   // Function to initialize Isotope
   function initIsotope() {
     $grid = $('.brand-letter-group .list').isotope({
-      itemSelector: 'li',
-      layoutMode: 'fitRows',
-      filter: function () {
-        return qsRegex ? $(this).text().match(qsRegex) : true;
-      }
+        itemSelector: 'li',
+        layoutMode: 'fitRows',
+        getSortData: {
+            name: function (itemElem) {
+                return $(itemElem).find('.name').text().toLowerCase();
+            }
+        },
+        sortBy: 'name',
+        sortAscending: true,
+        filter: function () {
+            return qsRegex ? $(this).text().match(qsRegex) : true;
+        }
     });
-
-  }
+}
 
   // Function to update filter
   function updateFilter() {
-    qsRegex = new RegExp($('.search').val(), 'gi');
+    var searchVal = $('.search').val().toLowerCase().trim();
+    
+    if (searchVal) {
+        var terms = searchVal.split(/\s*,\s*/); // Split by commas and remove extra spaces
+        qsRegex = new RegExp(terms.map(term => `(${term})`).join('|'), 'gi'); // Create regex to match any term
+    } else {
+        qsRegex = null; // Reset filter if search is empty
+    }
+
     $grid.isotope();
 
     setTimeout(function () {
-      $('.brand-letter-group').each(function () {
-        var finder = $(this).find('ul li:visible').length;
-        $(this).attr('data-count', finder);
-        setTimeout(function () {
-          $grid.isotope();
-        }, 100);
-      });
+        $('.brand-letter-group').each(function () {
+            var finder = $(this).find('ul li:visible').length;
+            $(this).attr('data-count', finder);
+            setTimeout(function () {
+                $grid.isotope();
+            }, 100);
+        });
     }, 150);
-  }
+}
+
 
   // Debounce function
   function debounce(fn, threshold) {
