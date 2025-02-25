@@ -306,8 +306,13 @@ body {
     color: #e4e6eb;
 }
 
-.dark .clear-all-check {
+.dark .clear-all-check,
+.dark .select-all-check  {
     color: #e4e6eb;
+}
+.dark .clear-all-check svg,
+.dark .select-all-check svg {
+    fill: #e4e6eb;
 }
 
 .dark .brand-box-container .each-brand .brand-image-hover {
@@ -426,6 +431,11 @@ body {
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"></path>
                       </svg> clear all </a>
+                      <a href="javascript:void(0);" class="select-all-check" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+                            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+                            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
+                          </svg> Select all result</a>
                   </div>
                 </div>
                 <div class="col-xs-12 col-lg-9 ry-each brand-list">
@@ -650,7 +660,7 @@ async function fetchFilesWithPagination(folderPath) {
     }
 }
 
-const fetchTemporaryLinks = async (files, batchSize = 200) => {
+const fetchTemporaryLinks = async (files, batchSize = 150) => {
   let allFilesWithUrls = [];
   for (let i = 0; i < files.length; i += batchSize) {
       const batch = files.slice(i, i + batchSize);
@@ -832,6 +842,7 @@ const processBrands = () => {
 
   document.querySelectorAll('.brand-box-container input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
   document.querySelector('.clear-all-check').style.display = 'none';
+  document.querySelector('.select-all-check').style.display = 'none';
   document.querySelector('.brand-container .ry-flex .brand-text .count').textContent = '0';
   document.querySelector('.download.button-download').classList.add('disabled');
   
@@ -862,6 +873,7 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
       
       $('.brand-box-container input[type="checkbox"]').prop('checked', false);
       $('.clear-all-check').hide();
+      $('.select-all-check').hide();
       $('.brand-container .ry-flex .brand-text .count').text('0');
       $('.download.button-download').addClass('disabled');
 
@@ -877,8 +889,8 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
   var qsRegex;
   var $grid;
 
-  // Function to initialize Isotope
-  function initIsotope() {
+    
+    function initIsotope() {
     $grid = $('.brand-letter-group .list').isotope({
         itemSelector: 'li',
         layoutMode: 'fitRows',
@@ -893,34 +905,58 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
             return qsRegex ? $(this).text().match(qsRegex) : true;
         }
     });
-}
+    }
 
-  // Function to update filter
-  function updateFilter() {
+    function updateFilter() {
     var searchVal = $('.search').val().toLowerCase().trim();
     
     if (searchVal) {
-        var terms = searchVal.split(/\s*,\s*/); // Split by commas and remove extra spaces
-        qsRegex = new RegExp(terms.map(term => `(${term})`).join('|'), 'gi'); // Create regex to match any term
+        var terms = searchVal.split(/\s*,\s*/); 
+        qsRegex = new RegExp(terms.map(term => `(${term})`).join('|'), 'gi'); 
     } else {
-        qsRegex = null; // Reset filter if search is empty
+        qsRegex = null; 
     }
 
     $grid.isotope();
 
     setTimeout(function () {
+        
         $('.brand-letter-group').each(function () {
-            var finder = $(this).find('ul li:visible').length;
-            $(this).attr('data-count', finder);
-            setTimeout(function () {
-                $grid.isotope();
-            }, 100);
+            var $this = $(this);
+            var visibleItems = $this.find('ul').isotope('getFilteredItemElements').length;
+            $this.attr('data-count', visibleItems);
         });
+  
+        $('.brand-box-container.active .brand-letter-group').each(function () {
+    var allZero = true;
+
+    $('.brand-box-container.active .brand-letter-group').each(function () {
+        var $this = $(this);
+        var dataCount = parseInt($this.attr('data-count'), 10);
+
+        if (dataCount !== 0) {
+            allZero = false; 
+            return false; 
+        }
+    });
+
+    if (allZero) {
+        $('.select-all-check').hide();
+        console.log('All data-count are 0');
+    } else {
+        $('.select-all-check').show();
+        console.log('At least one data-count is not 0');
+    }
+});
+
+
+        setTimeout(function () {
+            $grid.isotope('layout');
+        }, 100);
     }, 150);
 }
 
 
-  // Debounce function
   function debounce(fn, threshold) {
     var timeout;
     threshold = threshold || 100;
@@ -933,6 +969,8 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
       }
       timeout = setTimeout(delayed, threshold);
     };
+
+   
   }
 
   $(document).ready(function () {
@@ -952,6 +990,8 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
     if (targetNode) {
       observer.observe(targetNode, { childList: true, subtree: true });
     }
+
+    
   });
 
   var links = [];
@@ -1006,6 +1046,16 @@ document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
           $('.brand-container .ry-flex .brand-text .count').text('0');
           $('.download.button-download').addClass('disabled');
           links = [];
+      });
+
+      $('.select-all-check').click(function() {
+          $('.brand-box-container.active input[type="checkbox"]:visible').click();
+          $('.brand-box-container.active input[type="checkbox"]:visible').prop('checked', true);
+          $('.clear-all-check').show();
+          //$('.select-all-check').hide();
+          //$('.brand-container .ry-flex .brand-text .count').text('0');
+          $('.download.button-download').removeClass('disabled');
+          //links = [];
       });
     $( window ).scroll(function() {
       var height = $(window).scrollTop();
